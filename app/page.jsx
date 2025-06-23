@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic"; 
 
+import HomeFirstSection from "./home/HomeFirstSection.jsx";
 import HomeSecondSection from "./home/HomeSecondSection.jsx";
 import HomeThirdSection from "./home/HomeThirdSection.jsx";
 import HomeFourthSection from "./home/HomeFourthSection.jsx";
@@ -27,6 +28,7 @@ async function fetchRecommendedProjects() {
 }
 
 export default async function HomePage() {
+  let homeFirstSectionData = null;
   let homeSecondSectionData = null;
   let homeThirdSectionData = null;
   let homeFourthSectionData = null;
@@ -41,7 +43,7 @@ export default async function HomePage() {
 
     const json = await res.json();
 
-    
+    homeFirstSectionData = json.finalData?.HomeFirstSectionData?.[0] || null;
     homeSecondSectionData = json.finalData?.HomeSecondSectionData?.[0] || null;
     homeThirdSectionData = json.finalData?.HomeThirdSectionData?.[0] || null;
     homeFourthSectionData = json.finalData?.HomeFourthSectionData?.[0] || null; 
@@ -52,15 +54,18 @@ export default async function HomePage() {
     console.error("Error loading Home data:", e);
   }
 
+
+  
+
   return (
     <>
-      <Header/>
+      <HomeFirstSection data={homeFirstSectionData} />
       <Recommended projects={recommendedProjects} />
       <HomeSecondSection data={homeSecondSectionData} />
       <HomeThirdSection data={homeThirdSectionData} />
       <HomeFourthSection data={homeFourthSectionData} />
       <HomeFifthSection data={homeFifthSectionData} />
-      <Footer/>
+      
     </>
   );
 }
