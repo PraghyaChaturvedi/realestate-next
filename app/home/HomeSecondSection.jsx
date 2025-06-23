@@ -13,11 +13,11 @@ export default function HomeSecondSection({ data }) {
         {/* Left Section - Text */}
         <div className="w-full md:w-2/5 text-center md:text-left px-2 sm:px-4 pb-10">
           <h1 className="text-3xl sm:text-3xl md:text-5xl font-bold text-gray-800 mb-4 leading-snug">
-            {data.title} <span className="text-red-600">{data.redTitle}</span>
+            {data?.title} <span className="text-red-600">{data?.redTitle}</span>
           </h1>
 
           <p className="text-gray-500 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base">
-            {data.para}
+            {data?.para}
           </p>
 
           <button
@@ -33,7 +33,7 @@ export default function HomeSecondSection({ data }) {
           {/* Main Image */}
           <div className="relative w-full max-w-[300px] sm:max-w-[400px] h-[350px] sm:h-[400px] md:h-[550px] mr-0 sm:mr-4 md:mr-[90px]">
             <Image
-              src={data.bigImg}
+              src={data?.bigImg}
               alt="Modern white apartment building"
               fill
               className="object-cover"
@@ -45,7 +45,7 @@ export default function HomeSecondSection({ data }) {
           {/* Overlay Image */}
           <div className="absolute -bottom-16 sm:-bottom-20 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-5 w-[150px] h-[150px] sm:w-[200px] sm:h-[300px] md:w-[250px] md:h-[350px] lg:w-[300px] lg:h-[450px]">
             <Image
-              src={data.smallImg}
+              src={data?.smallImg}
               alt="Modern apartment building with red accents"
               className="object-cover border-[8px] sm:border-[12px] border-white shadow-2xl"
               fill

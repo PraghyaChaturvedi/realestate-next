@@ -17,15 +17,15 @@ const HomeFifthSection = ({ data }) => {
         </div>
 
         <Marquee speed={130} gradient={false}>
-          {safeData.map((partner, index) => (
+          {safeData?.map((partner, index) => (
             <div
-              key={partner._id || index}
+              key={partner?._id || index}
               className="inline-flex items-center justify-center mx-2"
             >
               <div className="relative h-32 w-56">
                 <Image
-                  src={partner.img}
-                  alt={partner.title || `partner-${index}`}
+                  src={partner?.img}
+                  alt={partner?.title || `partner-${index}`}
                   fill
                   className="object-contain"
                   sizes="(max-width: 768px) 150px, 224px"

@@ -9,7 +9,7 @@ const HomeFourthSection = ( {data} ) => {
       <div className="max-w-7xl mx-auto grid gap-12 items-center px-4 lg:grid-cols-2">
         {/* Left Side - Testimonials */}
         <div className="space-y-6 order-2 md:order-1 flex flex-col items-start ">
-          {data.section.map((testimonial, index) => {
+          {data?.section.map((testimonial, index) => {
             const isActive = index === 1;
 
             return (
@@ -34,10 +34,10 @@ const HomeFourthSection = ( {data} ) => {
                 {/* Testimonial Content */}
                 <div>
                   <h4 className="font-semibold text-gray-800">
-                    {testimonial.name}
+                    {testimonial?.name}
                   </h4>
                   <p className="text-sm text-gray-600 mt-1">
-                    {testimonial.text}
+                    {testimonial?.text}
                   </p>
                 </div>
               </div>
@@ -48,9 +48,9 @@ const HomeFourthSection = ( {data} ) => {
         {/* Right Side - Heading and Paragraph */}
         <div className="space-y-6 order-1 md:order-2 text-center md:text-left">
           <p className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-            {data.title}
+            {data?.title}
           </p>
-          <p className="text-gray-600">{data.para}</p>
+          <p className="text-gray-600">{data?.para}</p>
         </div>
       </div>
     </div>

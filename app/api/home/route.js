@@ -23,8 +23,7 @@ export async function GET() {
       HomeThirdSectionData,
       HomeFourthSectionData,
       HomeFifthSectionData,
-    };
-    
+    };    
 
     return NextResponse.json({ success: true, finalData }, { status: 200 });
   } catch (error) {

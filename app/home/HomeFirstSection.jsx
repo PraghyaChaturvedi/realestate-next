@@ -25,8 +25,8 @@ function HomeFirstSection( { data } ) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typingComplete, setTypingComplete] = useState(false);
 
-  const firstLine = data.firstLine;
-  const secondLine = data.secondLine;
+  const firstLine = data?.firstLine;
+  const secondLine = data?.secondLine;
 
   useEffect(() => {
     setIsClient(true);
@@ -92,7 +92,7 @@ function HomeFirstSection( { data } ) {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('${data.img}')`,
+            backgroundImage: `url('${data?.img}')`,
             backgroundPosition: "center bottom",
           }}
         >
@@ -115,12 +115,12 @@ function HomeFirstSection( { data } ) {
               </div>
               {/* Paragraphs */}
               <div className="space-y-6 max-w-xl">
-                {data.paragraphOne && (
+                {data?.paragraphOne && (
                   <p className="text-base sm:text-lg text-gray-700 p-3 px-4 backdrop-blur-sm bg-white/50 rounded-full">
                     {data.paragraphOne}
                   </p>
                 )}
-                {data.paragraphTwo && (
+                {data?.paragraphTwo && (
                   <span className="text-base sm:text-lg text-gray-700 font-medium p-2 px-3 backdrop-blur-sm bg-white/50 rounded-full">
                     {data.paragraphTwo}
                   </span>
@@ -335,7 +335,7 @@ function HomeFirstSection( { data } ) {
         <div className="absolute bottom-0 left-0 right-0 gradient-vertical from-bg-transparent to-bg-black py-6 z-20">
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {data.counts?.map((item, index) => (
+              {data?.counts?.map((item, index) => (
                 <div key={index} className="text-center">
                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
                     {isClient ? (
