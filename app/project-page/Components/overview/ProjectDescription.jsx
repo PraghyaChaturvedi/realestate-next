@@ -30,7 +30,7 @@ const AboutProject = ({ project }) => {
       )}
 
       {/* USPs */}
-      <h3 className="text-lg font-semibold mb-5 text-gray-900">
+      <h3 className="text-lg font-semibold mb-5 text-gray-900 font-main">
         Unique Selling Points
       </h3>
       <ul style={{ listStyle: "square" }}>
