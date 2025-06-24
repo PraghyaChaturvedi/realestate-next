@@ -87,7 +87,7 @@ function HomeFirstSection( { data } ) {
 
   return (
     <div className="overflow-x-hidden">
-      <div className="min-h-[100vh]">
+      <div className="relative lg:static lg:min-h-[100vh]">
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
