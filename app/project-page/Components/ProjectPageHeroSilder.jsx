@@ -20,7 +20,7 @@ const ProjectHeroSlider = ({
   };
 
   return (
-    <div className="relative w-[85vw] rounded-2xl overflow-hidden m-auto mt-10 shadow-2xl shadow-zinc-950">
+    <div className="relative w-[85vw] rounded-2xl overflow-hidden m-auto mt-10 shadow-lg shadow-zinc-950">
       <div className="h-[70vh] w-full overflow-hidden relative">
         <img
           src={

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { models } from "@/lib/connections.js"; // adjust if your import path differs
+import { models } from "@/lib/connections.js";
 const { Area, Builder, Project } = models;
 
 export async function GET(req) {
@@ -24,9 +24,11 @@ export async function GET(req) {
       filters.projectSubType = { $in: [getParam("projectSubType")] };
     }
 
-    // Status
+    // Status Filter
     if (getParam("status")) {
-      filters.status = getParam("status");
+      filters.projectSpecification = {
+        $elemMatch: { status: getParam("status") }
+      };
     }
 
     // Unit Type inside projectSpecification
@@ -36,31 +38,78 @@ export async function GET(req) {
       };
     }
 
-    // Price Filter
+    // Fixed Price Filter
     const minBudget = parseFloat(getParam("minBudget"));
     const maxBudget = parseFloat(getParam("maxBudget"));
+    
     if (!isNaN(minBudget) || !isNaN(maxBudget)) {
-      const priceFilter = {};
-      if (!isNaN(minBudget)) priceFilter.priceMax = { $gte: minBudget };
-      if (!isNaN(maxBudget)) priceFilter.priceMin = { $lte: maxBudget };
-
-      Object.assign(filters, priceFilter);
+      const priceConditions = [];
+      
+      if (!isNaN(minBudget) && !isNaN(maxBudget)) {
+        // Both min and max specified - project price range should overlap with user budget range
+        priceConditions.push({
+          $and: [
+            { 
+              $or: [
+                { 
+                  $expr: {
+                    $lte: [{ $toDouble: "$minPrice" }, maxBudget]
+                  }
+                },
+                { minPrice: { $exists: false } },
+                { minPrice: "" },
+                { minPrice: null }
+              ]
+            },
+            { 
+              $or: [
+                { 
+                  $expr: {
+                    $gte: [{ $toDouble: "$maxPrice" }, minBudget]
+                  }
+                },
+                { maxPrice: { $exists: false } },
+                { maxPrice: "" },
+                { maxPrice: null }
+              ]
+            }
+          ]
+        });
+      } else if (!isNaN(minBudget)) {
+        // Only minimum budget specified
+        priceConditions.push({
+          $or: [
+            { 
+              $expr: {
+                $gte: [{ $toDouble: "$maxPrice" }, minBudget]
+              }
+            },
+            { maxPrice: { $exists: false } },
+            { maxPrice: "" },
+            { maxPrice: null }
+          ]
+        });
+      } else if (!isNaN(maxBudget)) {
+        // Only maximum budget specified
+        priceConditions.push({
+          $or: [
+            { 
+              $expr: {
+                $lte: [{ $toDouble: "$minPrice" }, maxBudget]
+              }
+            },
+            { minPrice: { $exists: false } },
+            { minPrice: "" },
+            { minPrice: null }
+          ]
+        });
+      }
+      
+      if (priceConditions.length > 0) {
+        filters.$and = filters.$and || [];
+        filters.$and.push(...priceConditions);
+      }
     }
-
-    // Carpet Area
-    const carpetAreaMin = parseFloat(getParam("carpetAreaMin"));
-    const carpetAreaMax = parseFloat(getParam("carpetAreaMax"));
-    if (!isNaN(carpetAreaMin) || !isNaN(carpetAreaMax)) {
-      const areaFilter = {};
-      if (!isNaN(carpetAreaMin)) areaFilter.$gte = carpetAreaMin;
-      if (!isNaN(carpetAreaMax)) areaFilter.$lte = carpetAreaMax;
-
-      filters.$and = filters.$and || [];
-      filters.$and.push({
-        $or: [{ carpetAreaMin: areaFilter }, { carpetAreaMax: areaFilter }]
-      });
-    }
-
     // City
     if (getParam("city")) {
       filters.city = { $regex: getParam("city"), $options: "i" };
@@ -101,12 +150,12 @@ export async function GET(req) {
         { address: regex },
         { city: regex },
         { reraNumber: regex },
-        { description: regex },
         { usps: { $elemMatch: { $regex: regex } } },
         ...(builderIds.length > 0 ? [{ builder: { $in: builderIds } }] : []),
         ...(areaIds.length > 0 ? [{ area: { $in: areaIds } }] : [])
       ];
     }
+
 
     console.log("Applied filters:", JSON.stringify(filters, null, 2));
 
@@ -114,7 +163,7 @@ export async function GET(req) {
       .populate("builder area")
       .sort({ createdAt: -1 });
 
-    console.log(projects);
+    console.log(`Found ${projects.length} projects`);
 
     return NextResponse.json(projects, { status: 200 });
   } catch (error) {
@@ -122,3 +171,8 @@ export async function GET(req) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+
+
+
+

@@ -40,11 +40,12 @@ const CareerCard = ({
       </div>
 
       <Link
-        href={`/view-detail-career/${id}`}
-        className="inline-block mt-4 px-5 py-2 text-base font-semibold text-white bg-black rounded-full hover:bg-gray-800 transition"
-      >
-        View Details
-      </Link>
+  href={`/about/career/${id}`}
+  className="inline-block mt-4 px-5 py-2 text-base font-semibold text-white bg-black rounded-full hover:bg-gray-800 transition"
+>
+  View Details
+</Link>
+
     </div>
   );
 };

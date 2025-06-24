@@ -51,7 +51,7 @@ const ProjectTabSwitcher = ({ activeTab, setActiveTab }) => {
               : "text-gray-500 hover:text-gray-700"
           } whitespace-nowrap py-2 px-4 md:px-6 rounded-lg font-medium text-sm transition-all`}
         >
-          Specifications
+          Price Breakup
         </button>
       </nav>
     </div>
