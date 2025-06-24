@@ -59,7 +59,7 @@ const dateTemplate = (rowData) => {
 
   return (
     <div className="overflow-x-auto mt-6 space-y-10">
-      <h2 className="text-xl font-bold mb-4">Project Specifications</h2>
+      <h2 className="text-xl font-bold mb-4">Price Breakup</h2>
 
       {/* Table for other types */}
       {otherSpecs.length > 0 && (
