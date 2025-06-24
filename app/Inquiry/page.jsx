@@ -72,7 +72,7 @@ const Inquiry = () => {
               Inquiry
             </p>
             <p className="text-gray-600 mb-6">
-              Feel free to contact, We are ready to help you to find your dream home.
+              Our expert will contact you shortly.
             </p>
             <InquiryForm
               formData={formData}
