@@ -19,10 +19,10 @@ const AboutProject = ({ project }) => {
       </pre>
 
       {/* USPs */}
-      <h3 className="text-lg font-semibold mb-5 text-gray-900">
+      <h3 className="text-lg font-semibold mb-5 text-gray-900 font-main">
         Unique Selling Points
       </h3>
-      <ul style={{ listStyle: "square" }}>
+      <ul style={{ listStyle: "square" }} className="font-main">
         {(showFull ? project.usps : project.usps.slice(0, 3)).map((usp) => (
           <div
             key={usp}
