@@ -3,10 +3,16 @@
 import React from 'react';
 import { Lock } from 'lucide-react';
 import EventCard from './EventCard';
+import { motion } from 'framer-motion';
 
 export default function EventClient({ events }) {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gray-100 flex flex-col items-center"
+    >
       {/* Hero Section */}
       <div className="w-[80%] h-[30vh] bg-gradient-to-r from-gray-900 to-black py-6 text-center flex flex-col justify-center mt-10 rounded-4xl">
         <div className="flex justify-center mb-4">
@@ -27,6 +33,7 @@ export default function EventClient({ events }) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
+

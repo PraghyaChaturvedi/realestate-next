@@ -3,16 +3,13 @@ import { useState } from 'react';
 
 function TeamCards({ name, position, img }) {
   const [imageError, setImageError] = useState(false);
-  const [imageLoading, setImageLoading] = useState(true);
 
   const handleImageError = () => {
     console.error('Failed to load image:', img);
     setImageError(true);
-    setImageLoading(false);
   };
 
   const handleImageLoad = () => {
-    setImageLoading(false);
     setImageError(false);
   };
 
@@ -27,11 +24,6 @@ function TeamCards({ name, position, img }) {
 
       {/* Image Section */}
       <div className="flex-[1.8] relative">
-        {imageLoading && !imageError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
-            <div className="text-white">Loading...</div>
-          </div>
-        )}
         
         {imageError || !img ? (
           <div className="w-full h-64 bg-gray-800 flex items-center justify-center">
@@ -49,7 +41,6 @@ function TeamCards({ name, position, img }) {
             alt={name}
             onError={handleImageError}
             onLoad={handleImageLoad}
-            style={{ display: imageLoading ? 'none' : 'block' }}
           />
         )}
       </div>
@@ -58,5 +49,8 @@ function TeamCards({ name, position, img }) {
 }
 
 export default TeamCards;
+
+
+
 
 
