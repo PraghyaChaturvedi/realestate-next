@@ -70,7 +70,7 @@ const ProjectClientPage = ({ project }) => {
                 <ProjectDescription project={project} />
 
                 {/* Layout Plans Section */}
-                <ProjectLayoutPlans project={project} openImageExpanded={openImageExpanded} />
+                <ProjectLayoutPlans project={project} setShowFullForm={setShowFullForm} />
 
                 {/* Expanded Image Modal */}
               
