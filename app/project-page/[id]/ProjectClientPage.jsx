@@ -42,7 +42,7 @@ const ProjectClientPage = ({ project }) => {
   };
 
   return (
-    <div className="bg-gray-50 font-sans">
+    <div className="bg-gray-50">
       {/*  Hero Slider at the top */}
       <ProjectHeroSlider
         project={project}

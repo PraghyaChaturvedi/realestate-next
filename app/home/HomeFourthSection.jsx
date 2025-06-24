@@ -5,7 +5,7 @@ import { FaQuoteRight, FaUserAlt } from "react-icons/fa";
 
 const HomeFourthSection = ( {data} ) => {
   return (
-    <div className="w-full bg-gray-100 py-16 px-4 md:px-16 font-sans ">
+    <div className="w-full bg-gray-100 py-16 px-4 md:px-16">
       <div className="max-w-7xl mx-auto grid gap-12 items-center px-4 lg:grid-cols-2">
         {/* Left Side - Testimonials */}
         <div className="space-y-6 order-2 md:order-1 flex flex-col items-start ">
