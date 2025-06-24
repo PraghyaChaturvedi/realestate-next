@@ -47,9 +47,7 @@ export async function generateMetadata() {
 }
 
 export default async function PrivacyPolicyPage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/privacyPolicy`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/privacyPolicy`);
 
   if (!res.ok) {
     throw new Error('Failed to fetch privacy policy');

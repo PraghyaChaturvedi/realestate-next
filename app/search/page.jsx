@@ -9,9 +9,7 @@ export default async function SearchPage({ searchParams }) {
   const fetchInitialProjects = async () => {
     try {
       const query = new URLSearchParams(await searchParams);
-      const response = await fetch(`${baseUrl}/api/search?${query.toString()}`, {
-        cache: 'no-store',
-      });
+      const response = await fetch(`${baseUrl}/api/search?${query.toString()}`);
 
       if (!response.ok) {
         console.error("Failed to fetch initial projects, status:", response.status);

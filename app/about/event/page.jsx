@@ -48,9 +48,7 @@ export async function generateMetadata() {
 
 
 export default async function EventPage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/event`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/event`);
 
   if (!res.ok) {
     throw new Error('Failed to fetch events');

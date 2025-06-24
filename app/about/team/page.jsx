@@ -48,9 +48,7 @@ export async function generateMetadata() {
 
 
 export default async function TeamPage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/team`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/team`);
 
   if (!res.ok) {
     throw new Error('Failed to fetch team members');

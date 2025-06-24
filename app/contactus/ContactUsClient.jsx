@@ -34,10 +34,7 @@ export default function ContactUsPage() {
     const fetchFooter = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/footer`,
-          {
-            cache: "no-store",
-          }
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/footer`
         );
         if (!res.ok) throw new Error("Failed to fetch footer data");
         const data = await res.json();
