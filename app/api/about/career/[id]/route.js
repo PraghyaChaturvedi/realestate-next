@@ -11,7 +11,7 @@ export const config = {
   },
 };
 
-// -------- GET: Fetch career by ID --------
+
 export async function GET(req, { params }) {
   try {
     const { id } = await params;
@@ -35,6 +35,8 @@ export async function GET(req, { params }) {
 
 export async function POST(req) {
   try {
+    // req.body.resume = req.files["resume"] ? req.files["resume"][0].path : null;
+
     const formData = await req.formData();
 
     const name = formData.get("name");
