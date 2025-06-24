@@ -3,9 +3,7 @@ import CompanyProfileClient from './CompanyProfileClient';
 export default async function CompanyProfilePage() {
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
-  const res = await fetch(`${baseUrl}/api/about/companyProfile`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(`${baseUrl}/api/about/companyProfile`);
 
 
 if (!res.ok) {

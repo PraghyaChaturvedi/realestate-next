@@ -2,9 +2,7 @@ import ProjectClientPage from "./ProjectClientPage";
 
 async function getProjectDetails(id) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/api/project-page/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${baseUrl}/api/project-page/${id}`);
 
   if (!res.ok) {
     console.error("Failed to fetch project details");

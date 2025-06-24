@@ -13,9 +13,7 @@ import Recommended from "./home/Recommended.jsx";
 async function fetchRecommendedProjects() {
   let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   try {
-    const res = await fetch(`${baseUrl}/api/home/Recommended`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${baseUrl}/api/home/Recommended`);
 
     if (!res.ok) throw new Error("Failed to fetch recommended projects");
 
@@ -37,9 +35,7 @@ export default async function HomePage() {
   let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   try {
-    const res = await fetch(`${baseUrl}/api/home`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${baseUrl}/api/home`);
 
     const json = await res.json();
 

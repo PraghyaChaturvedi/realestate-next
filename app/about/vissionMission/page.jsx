@@ -56,9 +56,7 @@ export default async function VisionMissionPage() {
   const API = process.env.NEXT_PUBLIC_BASE_URL;
 
   try {
-    const res = await fetch(`${API}/api/about/vissionMission`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${API}/api/about/vissionMission`);
 
     if (!res.ok) throw new Error("Failed to fetch");
 

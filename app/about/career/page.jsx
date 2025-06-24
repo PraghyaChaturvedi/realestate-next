@@ -4,9 +4,7 @@ import CareerClient from "./CareerClient";
 
 
 async function fetchCareers() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/career`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/career`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch careers");
