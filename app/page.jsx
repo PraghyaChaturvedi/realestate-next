@@ -5,9 +5,8 @@ import HomeSecondSection from "./home/HomeSecondSection.jsx";
 import HomeThirdSection from "./home/HomeThirdSection.jsx";
 import HomeFourthSection from "./home/HomeFourthSection.jsx";
 import HomeFifthSection from "./home/HomeFifthSection.jsx";
-import Footer from "./Components/Footer.jsx";
-import Header from "./Components/Header.jsx";
 import Recommended from "./home/Recommended.jsx";
+import { Suspense } from "react";
 
 
 async function fetchRecommendedProjects() {
@@ -56,7 +55,7 @@ export default async function HomePage() {
   return (
     <>
       <HomeFirstSection data={homeFirstSectionData} />
-      <Recommended projects={recommendedProjects} />
+      <Suspense fallback={<div>Loading...</div>}><Recommended projects={recommendedProjects} /></Suspense>
       <HomeSecondSection data={homeSecondSectionData} />
       <HomeThirdSection data={homeThirdSectionData} />
       <HomeFourthSection data={homeFourthSectionData} />
