@@ -42,7 +42,7 @@ const ProjectClientPage = ({ project }) => {
   };
 
   return (
-    <div className="bg-gray-50 font-sans">
+    <div className="bg-gray-50">
       {/*  Hero Slider at the top */}
       <ProjectHeroSlider
         project={project}
@@ -70,7 +70,7 @@ const ProjectClientPage = ({ project }) => {
                 <ProjectDescription project={project} />
 
                 {/* Layout Plans Section */}
-                <ProjectLayoutPlans project={project} openImageExpanded={openImageExpanded} />
+                <ProjectLayoutPlans project={project} setShowFullForm={setShowFullForm} />
 
                 {/* Expanded Image Modal */}
               

@@ -2,10 +2,16 @@
 
 import CareerCard from './CareerCard';
 import { Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function CareerClient({ careers }) {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gray-100 flex flex-col items-center"
+    >
       {/* Header Section */}
       <div className="w-[80%] h-[30vh] bg-gradient-to-r from-gray-900 to-black py-6 text-center flex flex-col justify-center mt-10 rounded-4xl">
         <div className="flex justify-center mb-4">
@@ -17,7 +23,7 @@ export default function CareerClient({ careers }) {
       </div>
 
       {/* Cards */}
-      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 py-6 flex justify-center">
+      <div className="w-[80%] px-4 sm:px-6 md:px-8 lg:px-10 py-6 flex justify-center">
         <div className="w-full max-w-[1280px] grid gap-6 grid-cols-1 lg:grid-cols-3">
           {careers.length === 0 ? (
             <p className="col-span-full text-gray-500 text-center">No careers found.</p>
@@ -37,6 +43,6 @@ export default function CareerClient({ careers }) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
