@@ -63,18 +63,25 @@ const Cards = ({project}) => {
       </div>
       <div className="relative w-full overflow-hidden rounded-xl">
         <div className="bg-white overflow-hidden flex flex-col h-full ">
-          <div className="relative h-60 w-full overflow-hidden">
-            <Link href={`/project-page/${_id}`} className="w-full h-full">
-              <img
-                src={
-                  coverImages[0]?.url ||
-                  "https://placehold.co/600x400?text=Coming+Soon"
-                }
-                alt={projectName}
-                className="w-full h-[100%] object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </Link>
-          </div>
+          <div className="relative h-60 w-full overflow-hidden group">
+  <Link href={`/project-page/${_id}`} className="w-full h-full block">
+    <img
+      src={
+        coverImages[0]?.url ||
+        "https://placehold.co/600x400?text=Coming+Soon"
+      }
+      alt={projectName}
+      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+    />
+
+    {/* Overlay */}
+    <div className="absolute inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-70 transition-opacity duration-300">
+      <p className="text-white text-center text-sm md:text-base font-medium px-4">
+        Click to view more details about this project
+      </p>
+    </div>
+  </Link>
+</div>
 
           <div className="p-5 pb-3 flex-1">
             <div className="flex justify-between items-start">
