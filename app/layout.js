@@ -1,11 +1,12 @@
 import "./globals.css";
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 // import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { Poppins } from "next/font/google";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Whatsapp from "./Components/Whatsapp";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -32,9 +33,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={poppins.className}>
       <body className="font-main">
-        <Header/>
-          {children}
-        <Footer/>
+        <Header />
+        <Whatsapp />
+        {children}
+        <Footer />
       </body>
     </html>
   );
