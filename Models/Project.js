@@ -17,11 +17,6 @@ const ProjectSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Builder"
   },
-  status: {
-    type: String,
-    enum: ["Under Construction", "Ready to Move"]
-  },
-  possessionDate: String,
   reraNumber: String,
 
   // Location Details
@@ -32,25 +27,26 @@ const ProjectSchema = new Schema({
 
   projectSpecification: [
     {
-      unitType:{type: String, enum: ["1BHK", "2BHK", "3BHK", "4BHK", "Shops", "Offices", "Villas", "Plots"]},
+      unitType:{type: String, enum: ["1BHK", "2BHK", "3BHK", "4BHK", "5BHK", "6BHK", "7BHK", "Showroom", "Office", "Plot"]},
       subType:{type: String, enum: ["Apartment", "Bunglows/Villa/Row House", "Penthouse", "Office Space", "Shop/Showrooms", "Warehouse", "Industrial Shed", "Plot"]},
       area: {type: String, enum: ["Carpet Area", "Super Built-up Area"]},
-      minSize: String,
-      maxSize: String,
-      constructionAreaMinSize: String,
-      constructionAreaMaxSize: String,
+      size: String,
+      status: {type: String, enum: ["Under Construction", "Ready to Move"]},
+      constructionAreaSize: String,
       measurementUnit: {type: String, enum: ["sqft", "sqyd", "acres", "bigha"]},
       possessionDate: String,
-      price: String
+      price: String,
+      priceUnit: String,
     }
   ],
-  carpetAreaMin: String,
-  carpetAreaMax: String,
-  priceMin: String,
-  priceMax: String,
+  minSize: String,
+  maxSize: String,
+  
+  minPrice: String,
+  maxPrice: String,
 
   // Key Features
-  amenities: {type:[String]},
+  amenities: [String],
 
   // Detailed Description
   description: String,
@@ -92,3 +88,12 @@ ProjectSchema.pre('save', function(next) {
 });
 
 export default ProjectSchema;
+
+
+
+
+
+
+
+
+

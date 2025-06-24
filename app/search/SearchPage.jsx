@@ -10,6 +10,7 @@ import {
   FiChevronDown,
   FiGrid,
   FiTag,
+  FiClock,
 } from "react-icons/fi";
 
 // This component receives its initial data as a prop from the server component.
@@ -23,6 +24,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
   const [projects, setProjects] = useState(initialProjects);
   const [filters, setFilters] = useState({
     projectType: searchParams.get("projectType") || "",
+    status: searchParams.get("status") || "",
     minBudget: searchParams.get("minBudget") || "",
     maxBudget: searchParams.get("maxBudget") || "",
     unitType: searchParams.get("unitType") || "",
@@ -46,6 +48,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
   });
 
   const projectType = ["Residential", "Commercial", "Land"];
+  const projectStatus = ["Under Construction", "Ready to Move"];
   const unitType = ["1BHK", "2BHK", "3BHK", "4BHK", "Shops", "Offices", "Villas", "Plots"];
 
   // Re-sync projects from server props if they change (e.g., on navigation)
@@ -81,6 +84,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
       q: searchQuery,
       minBudget: filters.minBudget,
       maxBudget: filters.maxBudget,
+      status: filters.status, // Include status in search
     });
     router.push(`/search?${newQuery}`);
     setShowSuggestions(false);
@@ -162,8 +166,8 @@ const SearchPageClient = ({ initialProjects = [] }) => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row p-4 bg-white rounded-2xl shadow-lg border border-gray-100">
-            <div className="flex items-center flex-1 mb-2 md:mb-0 md:mr-4">
+          <div className="flex flex-col xl:flex-row p-4 bg-white rounded-2xl shadow-lg border border-gray-100">
+            <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mr-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiHome className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full relative">
                 <label className="text-xs font-medium text-gray-500 mb-1">Project Type</label>
@@ -175,7 +179,19 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
-            <div className="flex items-center flex-1 mb-2 md:mb-0 md:mx-4">
+            <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mx-4">
+              <div className="p-2 bg-red-50 rounded-lg mr-3"><FiClock className="text-red-600 text-xl" /></div>
+              <div className="flex flex-col w-full relative">
+                <label className="text-xs font-medium text-gray-500 mb-1">Project Status</label>
+                <select value={filters.status} onChange={(e) => handleFilterChange("status", e.target.value)} className="text-sm font-medium text-gray-800 focus:outline-none rounded-md py-1 pl-3 pr-8 w-full appearance-none bg-white transition-colors">
+                  <option value="">All Status</option>
+                  {projectStatus.map((status) => (<option key={status} value={status}>{status}</option>))}
+                </select>
+                <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" />
+              </div>
+            </div>
+
+            <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mx-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiGrid className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full relative">
                 <label className="text-xs font-medium text-gray-500 mb-1">Unit Type</label>
@@ -187,7 +203,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
-            <div className="flex items-center flex-1 mb-2 md:mb-0 md:ml-4">
+            <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:ml-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiTag className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full">
                 <label className="text-xs font-medium text-gray-500 mb-1">Price Range (₹)</label>
@@ -199,7 +215,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
-            <button type="submit" className="bg-red-600 text-white px-6 py-3 rounded-xl cursor-pointer w-full md:w-auto mt-4 md:mt-0 md:ml-6 hover:bg-red-700 transition-colors shadow-md hover:shadow-lg flex items-center justify-center font-medium">
+            <button type="submit" className="bg-red-600 text-white px-6 py-3 rounded-xl cursor-pointer w-full xl:w-auto mt-4 xl:mt-0 xl:ml-6 hover:bg-red-700 transition-colors shadow-md hover:shadow-lg flex items-center justify-center font-medium">
               <FiSearch className="mr-2" />
               Search
             </button>
@@ -226,4 +242,3 @@ const SearchPageClient = ({ initialProjects = [] }) => {
 };
 
 export default SearchPageClient;
-
