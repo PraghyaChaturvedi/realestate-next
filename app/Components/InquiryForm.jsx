@@ -49,7 +49,7 @@ const InquiryForm = () => {
       className="w-full"
     >
       {submitSuccess ? (
-        // ✅ Keep this success UI exactly as is
+        
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 sm:p-6 text-center">
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
             <svg className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,13 +57,11 @@ const InquiryForm = () => {
             </svg>
           </div>
           <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Inquiry Sent!</h3>
-          <p className="text-gray-600">We'll contact you within 24 hours.</p>
+          <p className="text-gray-600">Our expert will contact you shortly</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="w-full">
-          {/* ✅ Keep your original form JSX exactly */}
-          {/* Just use local state logic above */}
-          {/* All inputs below remain the same */}
+          
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
