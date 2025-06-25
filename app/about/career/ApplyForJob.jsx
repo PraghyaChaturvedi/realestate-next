@@ -182,15 +182,28 @@ export default function ApplyForJob({ id }) {
         {/* Resume PDF Preview Section */}
         {resumePreview && (
           <div className="mt-4">
-            <iframe src={resumePreview} className="w-full h-96 border" />
-            <a
-              href={resumePreview}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline"
-            >
-              Open in new tab
-            </a>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Resume Preview
+            </label>
+            <div className="border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+              <iframe
+                src={resumePreview}
+                className="w-full h-96"
+                title="Resume Preview"
+                style={{ border: 'none' }}
+              />
+            </div>
+            <div className="mt-2 flex items-center justify-between text-sm text-gray-600">
+              <span>PDF Preview</span>
+              <a
+                href={resumePreview}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                Open in new tab
+              </a>
+            </div>
           </div>
         )}
 
