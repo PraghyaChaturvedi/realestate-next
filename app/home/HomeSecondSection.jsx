@@ -24,9 +24,9 @@ export default function HomeSecondSection({ data }) {
             {data?.para}
           </p>
 
-          {/* Call-to-action button that navigates to the projects page */}
+          {/* Call-to-action button that navigates to the search page */}
           <button
-            onClick={() => router.push('/projects')}
+            onClick={() => router.push('/search')}
             className="cursor-pointer bg-red-500 hover:bg-red-600 text-white px-6 sm:px-8 py-2 sm:py-2.5 rounded text-sm font-medium"
           >
             See more
