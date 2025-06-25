@@ -14,7 +14,8 @@ import ProjectDescription from "../Components/overview/ProjectDescription.jsx";
 import ProjectLayoutPlans from "../Components/overview/ProjectLayoutPlans.jsx";
 import ProjectBrochure from "../Components/ProjectBroucher.jsx";
 import ProjectInquiryCard from "../Components/ProjectInquiryCard.jsx";  
-import PropertyEnquiryForm from "../Components/ProjectEnquiryForm.jsx"
+import PropertyEnquiryForm from "../Components/ProjectEnquiryForm.jsx";
+import ProjectChatOnWhatsApp from "../Components/ProjectChatOnWhatsApp.jsx";
 
 const ProjectClientPage = ({ project }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -155,6 +156,12 @@ const ProjectClientPage = ({ project }) => {
 
             {/* Enquire now */}
             <ProjectInquiryCard setShowFullForm={setShowFullForm} />
+
+            {/* Chat on WhatsApp */}
+            <ProjectChatOnWhatsApp
+              project={project}
+              setShowFullForm={setShowFullForm}
+            />
           </div>
         </div>
 
