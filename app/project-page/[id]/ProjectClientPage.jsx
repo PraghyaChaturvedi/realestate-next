@@ -16,6 +16,7 @@ import ProjectBrochure from "../Components/ProjectBroucher.jsx";
 import ProjectInquiryCard from "../Components/ProjectInquiryCard.jsx";  
 import PropertyEnquiryForm from "../Components/ProjectEnquiryForm.jsx";
 import ProjectChatOnWhatsApp from "../Components/ProjectChatOnWhatsApp.jsx";
+import SimilarProject from "../../Components/SimilarProject.jsx";
 
 const ProjectClientPage = ({ project }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -166,6 +167,8 @@ const ProjectClientPage = ({ project }) => {
         </div>
 
         {/* <SimilarProject /> */}
+        <SimilarProject id={project._id} />
+
       </div>
 
      {showFullForm && (
