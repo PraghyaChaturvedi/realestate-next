@@ -2,7 +2,7 @@ import React from "react";
 
 const loading = () => {
   return (
-    <div className="h-full flex mt-20 justify-center">
+    <div className="h-screen flex mt-20 justify-center">
       <div
         className="animate-spin rounded-full border-t-2 border-b-2 border-red-600 border-solid"
         style={{
