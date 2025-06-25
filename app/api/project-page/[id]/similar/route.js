@@ -21,7 +21,9 @@ export async function GET(req, { params }) {
         })
           .limit(5)
           .populate("area", ["_id", "name"])
-          .populate("builder", ["_id", "name"]),
+          .populate("builder", ["_id", "name"])
+          .populate("state", ["_id", "name"])
+          .populate("city", ["_id", "name"]),
 
         Project.find({
           _id: { $ne: project._id },
@@ -30,7 +32,9 @@ export async function GET(req, { params }) {
         })
           .limit(5)
           .populate("area", ["_id", "name"])
-          .populate("builder", ["_id", "name"]),
+          .populate("builder", ["_id", "name"])
+          .populate("state", ["_id", "name"])
+          .populate("city", ["_id", "name"]),
 
         Project.find({
           _id: { $ne: project._id },
@@ -39,7 +43,9 @@ export async function GET(req, { params }) {
         })
           .limit(5)
           .populate("area", ["_id", "name"])
-          .populate("builder", ["_id", "name"]),
+          .populate("builder", ["_id", "name"])
+          .populate("state", ["_id", "name"])
+          .populate("city", ["_id", "name"]),
       ]);
 
     const similarProjects = [

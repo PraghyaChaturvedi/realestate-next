@@ -11,7 +11,7 @@ export async function GET(req, { params }) {
     }
     //with the help of project id we have populated area and builder
     //to get the name of area and builder
-    const project = await Project.findById(id).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]);
+    const project = await Project.findById(id).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]).populate("state", ["_id", "name"]).populate("city", ["_id", "name"]);
 
     if (!project) {
       return NextResponse.json({ message: "Project not found" }, { status: 404 });

@@ -158,7 +158,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
                 {showSuggestions && (suggestions.areas.length > 0 || suggestions.projects.length > 0 || suggestions.cities.length > 0) && (
                   <div className="z-50 absolute top-full mt-2 w-full bg-white shadow-lg rounded-md max-h-64 overflow-y-auto border border-gray-200">
                     {suggestions.areas.map((area) => (<div key={area._id} onClick={() => handleSuggestionClick(() => router.push(`/search?area=${area.name}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{area.name}</div>))}
-                    {suggestions.cities.map((city, index) => (<div key={index} onClick={() => handleSuggestionClick(() => router.push(`/search?city=${city}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{city}</div>))}
+                    {suggestions.cities.map((city) => (<div key={city._id} onClick={() => handleSuggestionClick(() => router.push(`/search?city=${city.name}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{city.name}</div>))}
                     {suggestions.projects.map((project) => (<div key={project._id} onClick={() => handleSuggestionClick(() => router.push(`/project-page/${project._id}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{project.projectName}</div>))}
                   </div>
                 )}

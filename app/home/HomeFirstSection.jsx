@@ -32,7 +32,8 @@ function HomeFirstSection( { data } ) {
   
   // State for search functionality
   const [location, setLocation] = useState(""); // User input for location search
-  const [city, setCity] = useState(""); // Selected city from dropdown
+  const [cities, setCities] = useState([]); // Array of available cities
+  const [selectedCity, setSelectedCity] = useState(null); // Selected city from dropdown
   const [isClient, setIsClient] = useState(false); // Client-side rendering flag for hydration
   
   // Base URL for API calls from environment variables
@@ -79,8 +80,8 @@ function HomeFirstSection( { data } ) {
     }
     
     // Add city parameter if selected and not "All Cities"
-    if (city && city !== "All Cities") {
-      params.set("city", city);
+    if (selectedCity && selectedCity !== "All Cities") {
+      params.set("city", selectedCity);
     }
     
     // Navigate to search results page with parameters
@@ -148,6 +149,22 @@ function HomeFirstSection( { data } ) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Effect to fetch cities from API
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/city`);
+        const citiesData = await response.json();
+        setCities(citiesData);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+        setCities([]); // Set empty array on error
+      }
+    };
+    
+    fetchCities();
+  }, [baseUrl]);
 
   return (
     <div className="overflow-x-hidden">
@@ -221,15 +238,12 @@ function HomeFirstSection( { data } ) {
                   </label>
                   <Dropdown
                     className="w-full border border-gray-300 rounded-lg text-sm sm:text-base p-dropdown-input-text:py-2 sm:p-dropdown-input-text:py-3"
-                    value={city}
-                    onChange={(e) => setCity(e.value)}
-                    options={[
-                      "All Cities",
-                      "Ahmedabad",
-                      "Gandhinagar",
-                      "Pune",
-                      "Mumbai",
-                    ]}
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.value)}
+                    options={cities.map((c) => ({
+                      label: c.name,
+                      value: c.name
+                    }))}
                     placeholder="Select City"
                     checkmark={true}
                     highlightOnSelect={false}
@@ -300,8 +314,8 @@ function HomeFirstSection( { data } ) {
                           onClick={() => {
                             const params = new URLSearchParams();
                             params.set("q", suggestions.value);
-                            if (city && city !== "All Cities") {  
-                              params.set("city", city);
+                            if (selectedCity && selectedCity !== "All Cities") {  
+                              params.set("city", selectedCity);
                             }
                             router.push(`/search?${params.toString()}`);
                             setSuggestions({
@@ -328,8 +342,8 @@ function HomeFirstSection( { data } ) {
                               onClick={() => {
                                 const params = new URLSearchParams();
                                 params.set("area", area.name);
-                                if (city && city !== "All Cities") {
-                                  params.set("city", city);
+                                if (selectedCity && selectedCity !== "All Cities") {
+                                  params.set("city", selectedCity);
                                 }
                                 router.push(`/search?${params.toString()}`);
                                 setSuggestions({
@@ -353,13 +367,13 @@ function HomeFirstSection( { data } ) {
                           <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
                             Cities
                           </div>
-                          {suggestions.cities.map((city, index) => (
+                          {suggestions.cities.map((city) => (
                             <div
-                              key={index}
+                              key={city._id}
                               className="px-3 sm:px-4 py-1 sm:py-2 hover:bg-gray-100 text-xs sm:text-sm cursor-pointer"
                               onClick={() => {
                                 const params = new URLSearchParams();
-                                params.set("city", city);
+                                params.set("city", city.name);
                                 router.push(`/search?${params.toString()}`);
                                 setSuggestions({
                                   value: "",
@@ -369,7 +383,7 @@ function HomeFirstSection( { data } ) {
                                 });
                               }}
                             >
-                              {city}
+                              {city.name}
                             </div>
                           ))}
                         </>

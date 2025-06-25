@@ -127,7 +127,7 @@ const ProjectHeroSlider = ({
             <div className="flex items-center text-white/90">
               <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-2" strokeWidth={2} />
               <span className="text-sm sm:text-base">
-                {project.area?.name}, {project.city}
+                {project.area?.name}, {project.city?.name}
               </span>
             </div>
           </div>

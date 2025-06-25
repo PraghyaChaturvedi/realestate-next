@@ -23,7 +23,7 @@ const ProjectBrochure = ({ project, setShowFullForm }) => {
             {project?.projectName || "Brochure"}
           </div>
           <div className="text-sm text-gray-500 mt-1">
-            {project?.city}
+            {project?.city?.name}
           </div>
         </div>
       </div>

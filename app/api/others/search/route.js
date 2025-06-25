@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { models } from "@/lib/connections.js"; // adjust if your import path differs
-const { Area, Builder, Project } = models;
+const { Area, Builder, Project, City, State } = models;
 
 export async function GET(req) {
   try {
@@ -63,7 +63,26 @@ export async function GET(req) {
 
     // City
     if (getParam("city")) {
-      filters.city = { $regex: getParam("city"), $options: "i" };
+      const cityDoc = await City.findOne({
+        name: { $regex: getParam("city"), $options: "i" }
+      });
+      if (cityDoc) {
+        filters.city = cityDoc._id;
+      } else {
+        return NextResponse.json([], { status: 200 });
+      }
+    }
+
+    // State
+    if (getParam("state")) {
+      const stateDoc = await State.findOne({
+        name: { $regex: getParam("state"), $options: "i" }
+      });
+      if (stateDoc) {
+        filters.state = stateDoc._id;
+      } else {
+        return NextResponse.json([], { status: 200 });
+      }
     }
 
     // Area
@@ -111,7 +130,7 @@ export async function GET(req) {
     console.log("Applied filters:", JSON.stringify(filters, null, 2));
 
     const projects = await Project.find(filters)
-      .populate("builder area")
+      .populate("builder area state city")
       .sort({ createdAt: -1 });
 
     console.log(projects);

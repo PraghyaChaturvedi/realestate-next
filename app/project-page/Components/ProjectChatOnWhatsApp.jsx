@@ -7,7 +7,7 @@ const ProjectChatOnWhatsApp = ({ project }) => {
   // Generate dynamic message based on project details
   const generateWhatsAppMessage = () => {
     const projectName = project?.projectName || "Property";
-    const city = project?.city || "";
+    const city = project?.city?.name || "";
     const location = project?.area.name || "";
 
     return encodeURIComponent(

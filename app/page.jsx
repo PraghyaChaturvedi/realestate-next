@@ -29,11 +29,11 @@ export async function generateMetadata() {
   const keyword = projects.slice(0, 4).flatMap((p) => [
     `${p.builderName} ${p.projectName}`,
     `${p.projectName} ${p.unit} ${p.type}`,
-    `${p.projectName} ${p.city}`,
+    `${p.projectName} ${p.city.name}`,
     `${p.projectName} price ${p.price} size ${p.size}`,
     `${p.projectName}`,
     `${p.builderName}`,
-    `${p.city}`,
+    `${p.city.name}`,
   ]);
 
   return {
