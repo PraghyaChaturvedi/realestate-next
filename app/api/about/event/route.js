@@ -6,6 +6,7 @@ export async function GET() {
     console.log("hello")
     try {
         const event= await Event.find();
+        console.log("Event data fetched successfully:", event);
         return NextResponse.json({ success: true, event }, { status: 200 });
     } catch (error) {
         console.error("Error fetching company profile:", error);

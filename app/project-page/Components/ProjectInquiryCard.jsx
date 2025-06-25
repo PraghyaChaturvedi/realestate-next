@@ -18,7 +18,7 @@ const ProjectInquiryCard = ({ setShowFullForm }) => {
 
         <button
           onClick={() => setShowFullForm(true)}
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
+          className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
         >
           <MessageSquare className="h-5 w-5" />
           <span>Enquire Now</span>
