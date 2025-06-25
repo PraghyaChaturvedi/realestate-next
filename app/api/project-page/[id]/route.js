@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { models } from "@/lib/connections.js";
 const { Project,Leads } = models;
 
+
 export async function GET(req, { params }) {
   try {
     const { id } = await params;
@@ -37,8 +38,5 @@ export async function POST(request) {
     );
   }
 }
-
-
-
 
 
