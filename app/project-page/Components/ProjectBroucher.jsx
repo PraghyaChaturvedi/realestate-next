@@ -3,19 +3,21 @@
 import { View } from "lucide-react";
 
 const ProjectBrochure = ({ project, setShowFullForm }) => {
-
-
   return (
     <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+      {/* Section heading */}
       <h3 className="font-semibold text-lg text-gray-900 mb-6">
         Project Brochure
       </h3>
 
+      {/* Brochure information block */}
       <div className="bg-gray-50 rounded-xl p-6 flex items-center gap-6 border border-gray-200">
+        {/* Icon */}
         <div className="bg-red-100 p-4 rounded-xl">
           <View className="h-7 w-7 text-red-600" strokeWidth={1.5} />
         </div>
 
+        {/* Project name and city */}
         <div className="min-w-0">
           <div className="font-medium text-gray-900 text-sm truncate">
             {project?.projectName || "Brochure"}
@@ -26,6 +28,7 @@ const ProjectBrochure = ({ project, setShowFullForm }) => {
         </div>
       </div>
 
+      {/* Button to open brochure modal/form */}
       <button
         onClick={
           () => {
@@ -42,6 +45,3 @@ const ProjectBrochure = ({ project, setShowFullForm }) => {
 };
 
 export default ProjectBrochure;
-
-
-

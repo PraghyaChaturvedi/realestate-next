@@ -9,7 +9,8 @@ export async function GET(req, { params }) {
     if (!id) {
       return NextResponse.json({ message: "Project ID is required" }, { status: 400 });
     }
-
+    //with the help of project id we have populated area and builder
+    //to get the name of area and builder
     const project = await Project.findById(id).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]);
 
     if (!project) {

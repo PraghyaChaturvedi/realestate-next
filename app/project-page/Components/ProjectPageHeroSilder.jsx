@@ -1,4 +1,5 @@
 "use client";
+
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 
 const ProjectHeroSlider = ({
@@ -8,6 +9,7 @@ const ProjectHeroSlider = ({
   currentImageIndex,
   setCurrentImageIndex,
 }) => {
+  // Format number to Indian currency units (Lacs/Cr)
   const formatToIndianUnits = (num) => {
     if (!num || num <= 0) return "On Request";
     if (num >= 1e7) {
@@ -20,8 +22,11 @@ const ProjectHeroSlider = ({
   };
 
   return (
+    // Wrapper container for the hero slider
     <div className="relative w-[85vw] rounded-2xl overflow-hidden m-auto mt-10 shadow-lg shadow-zinc-950">
+      {/* Image container */}
       <div className="h-[70vh] w-full overflow-hidden relative">
+        {/* Display current image or fallback */}
         <img
           src={
             project.coverImages[currentImageIndex]?.url ||
@@ -34,15 +39,18 @@ const ProjectHeroSlider = ({
           className="w-full h-full object-cover transition-opacity duration-500"
         />
 
+        {/* Overlay gradient for text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-        {/* Navigation arrows */}
+        {/* Left navigation arrow */}
         <button
           onClick={prevImage}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-sm rounded-full p-3 hover:bg-white/40 transition-all"
         >
           <ChevronLeft className="h-8 w-8 text-white" strokeWidth={2} />
         </button>
+
+        {/* Right navigation arrow */}
         <button
           onClick={nextImage}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-sm rounded-full p-3 hover:bg-white/40 transition-all"
@@ -50,7 +58,7 @@ const ProjectHeroSlider = ({
           <ChevronRight className="h-8 w-8 text-white" strokeWidth={2} />
         </button>
 
-        {/* Image indicators */}
+        {/* Image indicators (dots) */}
         <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
           {project.coverImages.map((_, index) => (
             <button
@@ -64,10 +72,11 @@ const ProjectHeroSlider = ({
         </div>
       </div>
 
+      {/* Text overlay content (bottom area) */}
       <div className="absolute bottom-0 left-0 right-0 px-4 sm:px-6 pb-6 sm:pb-8 max-w-7xl mx-auto">
         <div className="flex flex-col">
           <div className="max-w-2xl">
-            {/* Project Type Tags */}
+            {/* Display project type tags */}
             <div className="flex flex-wrap gap-2">
               {Array.isArray(project.projectType) &&
                 project.projectType.map((type) => (
@@ -80,7 +89,7 @@ const ProjectHeroSlider = ({
                 ))}
             </div>
 
-            {/* Status Tag */}
+            {/* Display possession status tags */}
             <div className="flex flex-wrap gap-2 mt-2">
               {Array.isArray(project.projectSpecification) &&
                 [
@@ -97,12 +106,12 @@ const ProjectHeroSlider = ({
                 ))}
             </div>
 
-            {/* Project Name */}
+            {/* Project name */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">
               {project.projectName}
             </h1>
 
-            {/* Price */}
+            {/* Price display */}
             <div className="text-lg sm:text-xl font-bold text-white mb-1">
               {Array.isArray(project.projectSpecification) &&
               project.projectSpecification.length > 0 ? (
@@ -114,7 +123,7 @@ const ProjectHeroSlider = ({
               )}
             </div>
 
-            {/* Location */}
+            {/* Location display */}
             <div className="flex items-center text-white/90">
               <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-2" strokeWidth={2} />
               <span className="text-sm sm:text-base">
