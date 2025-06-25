@@ -101,7 +101,6 @@ const EventCard = ({ event }) => {
             <h3 className="font-bold text-xl text-white mb-3 custom-line-clamp-2 duration-300">
               {event.title || "Untitled Event"}
             </h3>
-            
           </div>
         </div>
       </div>
@@ -163,6 +162,5 @@ const EventCard = ({ event }) => {
     </>
   );
 };
-
 
 export default EventCard;
