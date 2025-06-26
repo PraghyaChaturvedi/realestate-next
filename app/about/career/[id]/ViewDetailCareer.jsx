@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import ApplyForJob from './ApplyForJob';
-import axios from 'axios';
 
 // Component to view detailed information for a specific career/job opening
 export default function ViewDetailCareer({ id }) {
@@ -13,8 +12,8 @@ export default function ViewDetailCareer({ id }) {
   useEffect(() => {
     const fetchCareer = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/career/${id}`);
-        setCareer(res.data);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/career/${id}`);
+        setCareer(await res.json());
       } catch (err) {
         console.error("Failed to fetch career details", err);
       }
