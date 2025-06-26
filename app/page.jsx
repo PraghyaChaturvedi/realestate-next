@@ -104,7 +104,8 @@ export default async function HomePage() {
 
   let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  try {
+  try { 
+
     const res = await fetch(`${baseUrl}/api/home`);
     const json = await res.json();
 
@@ -121,6 +122,7 @@ export default async function HomePage() {
 
   return (
     <>
+      
       <HomeFirstSection data={homeFirstSectionData} />
       <Suspense fallback={<div>Loading...</div>}>
         <Recommended projects={recommendedProjects} />
