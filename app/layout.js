@@ -2,21 +2,10 @@ import "./globals.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-// import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { Poppins } from "next/font/google";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Whatsapp from "./Components/Whatsapp";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 const poppins = Poppins({
   variable: "--font-poppins",

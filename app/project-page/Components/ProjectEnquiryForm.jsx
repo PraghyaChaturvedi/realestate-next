@@ -4,31 +4,34 @@ import React, { useState } from "react";
 import { MessageSquare, Check, X } from "lucide-react";
 
 const PropertyEnquiryForm = ({
-  isOpen,
-  onClose,
-  projectId,
-  projectName,
-  onSubmitSuccess,
-  onSubmitError,
-  formSubmitted,
+  isOpen,              // Boolean: controls whether the modal is shown
+  onClose,             // Function: to close the modal
+  projectId,           // String or ID: the current project ID
+  projectName,         // String: project name (not used in this form directly)
+  onSubmitSuccess,     // Callback: triggered on successful submission
+  onSubmitError,       // Callback: triggered on error
+  formSubmitted,       // Boolean: whether form was successfully submitted
 }) => {
+  // Local form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
-    project: projectId,
+    project: projectId,  // Include project ID in submission
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track form submission state
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
+  // Handle changes in form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Submit form handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -44,6 +47,7 @@ const PropertyEnquiryForm = ({
 
       if (!response.ok) throw new Error("Failed to submit enquiry");
 
+      // Reset form after successful submission
       setFormData({
         name: "",
         email: "",
@@ -52,14 +56,15 @@ const PropertyEnquiryForm = ({
         project: projectId,
       });
 
-      if (onSubmitSuccess) onSubmitSuccess();
+      if (onSubmitSuccess) onSubmitSuccess(); // Invoke success callback
     } catch (err) {
-      if (onSubmitError) onSubmitError(err.message);
+      if (onSubmitError) onSubmitError(err.message); // Invoke error callback
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // Always reset submitting state
     }
   };
 
+  // Close form and reset fields
   const handleClose = () => {
     setFormData({
       name: "",
@@ -71,11 +76,14 @@ const PropertyEnquiryForm = ({
     onClose();
   };
 
+  // Do not render modal if not open
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-2">
+      {/* Modal container */}
       <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+        {/* Close button */}
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10"
@@ -84,6 +92,7 @@ const PropertyEnquiryForm = ({
         </button>
 
         <div className="p-8">
+          {/* Modal header */}
           <div className="text-center mb-6">
             <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1">
               <MessageSquare className="h-6 w-6 text-red-600" />
@@ -91,9 +100,9 @@ const PropertyEnquiryForm = ({
             <h2 className="text-2xl font-bold text-gray-900">
               Enquire About This Property
             </h2>
-            
           </div>
 
+          {/* Show success message after form submission */}
           {formSubmitted ? (
             <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -113,6 +122,7 @@ const PropertyEnquiryForm = ({
               </button>
             </div>
           ) : (
+            // Show enquiry form if not submitted
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">
@@ -171,6 +181,7 @@ const PropertyEnquiryForm = ({
                 ></textarea>
               </div>
 
+              {/* Submit button */}
               <button
                 type="submit"
                 disabled={isSubmitting}

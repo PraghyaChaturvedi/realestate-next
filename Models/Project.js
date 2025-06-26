@@ -21,8 +21,8 @@ const ProjectSchema = new Schema({
 
   // Location Details
   area: { type: mongoose.Schema.Types.ObjectId, ref: "Area"},
-  city: String,
-  state: String,
+  city: { type: mongoose.Schema.Types.ObjectId, ref: "City" },
+  state: { type: mongoose.Schema.Types.ObjectId, ref: "State" },
   mapLink: String,
 
   projectSpecification: [

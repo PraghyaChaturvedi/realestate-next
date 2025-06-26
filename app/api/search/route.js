@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { models } from "@/lib/connections.js";
-const { Area, Builder, Project } = models;
+const { Area, Builder, Project, City, State } = models;
 
 export async function GET(req) {
   try {
@@ -110,9 +110,29 @@ export async function GET(req) {
         filters.$and.push(...priceConditions);
       }
     }
+
     // City
     if (getParam("city")) {
-      filters.city = { $regex: getParam("city"), $options: "i" };
+      const cityDoc = await City.findOne({
+        name: { $regex: getParam("city"), $options: "i" }
+      });
+      if (cityDoc) {
+        filters.city = cityDoc._id;
+      } else {
+        return NextResponse.json([], { status: 200 });
+      }
+    }
+
+    // State
+    if (getParam("state")) {
+      const stateDoc = await State.findOne({
+        name: { $regex: getParam("state"), $options: "i" }
+      });
+      if (stateDoc) {
+        filters.state = stateDoc._id;
+      } else {
+        return NextResponse.json([], { status: 200 });
+      }
     }
 
     // Area
@@ -137,33 +157,35 @@ export async function GET(req) {
     if (getParam("q")) {
       const regex = new RegExp(getParam("q"), "i");
 
-      const [matchingBuilders, matchingAreas] = await Promise.all([
+      const [matchingBuilders, matchingAreas, matchingCities, matchingStates] = await Promise.all([
         Builder.find({ name: regex }).select("_id"),
-        Area.find({ name: regex }).select("_id")
+        Area.find({ name: regex }).select("_id"),
+        City.find({ name: regex }).select("_id"),
+        State.find({ name: regex }).select("_id")
       ]);
 
       const builderIds = matchingBuilders.map((b) => b._id);
       const areaIds = matchingAreas.map((a) => a._id);
+      const cityIds = matchingCities.map((c) => c._id);
+      const stateIds = matchingStates.map((s) => s._id);
+
 
       filters.$or = [
         { projectName: regex },
         { address: regex },
-        { city: regex },
         { reraNumber: regex },
         { usps: { $elemMatch: { $regex: regex } } },
         ...(builderIds.length > 0 ? [{ builder: { $in: builderIds } }] : []),
-        ...(areaIds.length > 0 ? [{ area: { $in: areaIds } }] : [])
+        ...(areaIds.length > 0 ? [{ area: { $in: areaIds } }] : []),
+        ...(cityIds.length > 0 ? [{ city: { $in: cityIds } }] : []),
+        ...(stateIds.length > 0 ? [{ state: { $in: stateIds }}] : []),
       ];
     }
 
 
-    console.log("Applied filters:", JSON.stringify(filters, null, 2));
-
     const projects = await Project.find(filters)
-      .populate("builder area")
+      .populate("builder area state city")
       .sort({ createdAt: -1 });
-
-    console.log(`Found ${projects.length} projects`);
 
     return NextResponse.json(projects, { status: 200 });
   } catch (error) {
@@ -171,7 +193,6 @@ export async function GET(req) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
 
 
 

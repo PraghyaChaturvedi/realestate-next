@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
       "real estate project",
       "Shelter4U project",
       "property listing",
-      `project in ${project.city || ""}`,
+      `project in ${project.city.name || ""}`,
       "real estate India",
     ],
     openGraph: {

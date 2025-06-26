@@ -3,7 +3,6 @@ import { X, Calendar, MapPin, Users, Camera } from "lucide-react";
 
 const EventCard = ({ event }) => {
   const [showImages, setShowImages] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Optimize Cloudinary URL with transformations
   const optimizeImageUrl = (url) => {
@@ -60,17 +59,11 @@ const EventCard = ({ event }) => {
           {/* Image Container */}
           <div className="relative overflow-hidden">
             <div className="aspect-[4/3] relative">
-              {!imageLoaded && (
-                <div className="absolute inset-0 animate-pulse" />
-              )}
               <img
-                className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${
-                  imageLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
+                className={"w-full h-full object-cover transition-all duration-700 group-hover:scale-110"}
                 src={event.coverImage ? optimizeImageUrl(event.coverImage) : fallbackImage}
                 alt={event.title || "Event image"}
                 loading="lazy"
-                onLoad={() => setImageLoaded(true)}
               />
               
               {/* Gradient Overlay */}
@@ -101,7 +94,6 @@ const EventCard = ({ event }) => {
             <h3 className="font-bold text-xl text-white mb-3 custom-line-clamp-2 duration-300">
               {event.title || "Untitled Event"}
             </h3>
-            
           </div>
         </div>
       </div>
@@ -163,6 +155,5 @@ const EventCard = ({ event }) => {
     </>
   );
 };
-
 
 export default EventCard;

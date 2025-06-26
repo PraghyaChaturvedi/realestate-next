@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { models } from "@/lib/connections.js";
 const { Project,Leads } = models;
 
+
 export async function GET(req, { params }) {
   try {
     const { id } = await params;
@@ -10,8 +11,8 @@ export async function GET(req, { params }) {
       return NextResponse.json({ message: "Project ID is required" }, { status: 400 });
     }
 
-    const project = await Project.findById(id).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]);
-
+    const project = await Project.findById(id).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]).populate("state", ["_id", "name"]).populate("city", ["_id", "name"]);
+    console.log(project);
     if (!project) {
       return NextResponse.json({ message: "Project not found" }, { status: 404 });
     }
@@ -37,8 +38,5 @@ export async function POST(request) {
     );
   }
 }
-
-
-
 
 

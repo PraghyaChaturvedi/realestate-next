@@ -9,6 +9,8 @@ export async function GET(req) {
     const projects = await Project.find({})
       .populate("area", ["_id", "name"])
       .populate("builder", ["_id", "name"])
+      .populate("state", ["_id", "name"])
+      .populate("city", ["_id", "name"])
       .sort({ createdAt: -1 });
       
       // console.log(projects);
@@ -22,3 +24,4 @@ export async function GET(req) {
     });
   }
 }
+

@@ -8,6 +8,7 @@ import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 const Footer = () => {
   const [footerData, setFooterData] = useState(null);
 
+  // Fetch footer data on component mount
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
@@ -23,23 +24,31 @@ const Footer = () => {
     fetchFooterData();
   }, []);
 
-  if (!footerData) return null; // or a loading spinner/message
+  // Show nothing until footer data is available
+  if (!footerData) return null;
 
   return (
     <footer className="bg-black text-gray-200 relative overflow-hidden">
+      {/* Gradient background overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-20" />
+
+      {/* Main content wrapper */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* CONTACT US */}
+          
+          {/* Contact Information Section */}
           <div>
             <p className="text-2xl font-bold mb-6 text-white">CONTACT US</p>
             <div className="space-y-4">
+              {/* Address */}
               <div className="flex items-start group">
-                <MapPin className="h-5 w-5 mr-2 mt-1 text-gray-400 group-hover:text-purple-400" />
+                <MapPin className="h-12 w-12 mr-2 mt-1 text-gray-400 group-hover:text-purple-400" />
                 <p className="text-gray-300 group-hover:text-white">
                   {footerData.address}
                 </p>
               </div>
+
+              {/* Email list */}
               {footerData.mail?.map((email, i) => (
                 <div key={i} className="flex items-center group">
                   <Mail className="h-5 w-5 mr-2 text-gray-400 group-hover:text-purple-400" />
@@ -51,6 +60,8 @@ const Footer = () => {
                   </a>
                 </div>
               ))}
+
+              {/* Phone list */}
               {footerData.contact?.map((phone, i) => (
                 <div key={i} className="flex items-center group">
                   <Phone className="h-5 w-5 mr-2 text-gray-400 group-hover:text-purple-400" />
@@ -65,7 +76,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* MENU */}
+          {/* Menu Links Section */}
           <div>
             <p className="text-2xl font-bold mb-6 text-gray-100">MENU</p>
             <ul className="space-y-3">
@@ -93,7 +104,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* PROPERTY BY LOCATION */}
+          {/* Property by Location Section */}
           <div>
             <p className="text-2xl font-bold mb-6 text-gray-100">PROPERTY BY LOCATION</p>
             <ul className="space-y-3">
@@ -111,7 +122,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* PROPERTY BY TYPE */}
+          {/* Property by Type Section */}
           <div>
             <p className="text-2xl font-bold mb-6 text-gray-100">PROPERTY BY TYPE</p>
             <ul className="space-y-3">
@@ -130,7 +141,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* DISCLAIMER */}
+        {/* Disclaimer and RERA Info */}
         <div className="mt-12 mb-6 border-t border-gray-800 pt-8 text-sm text-gray-400">
           <p className="mb-4">
             <span className="font-bold text-gray-200">Disclaimer:</span>{" "}
@@ -140,9 +151,11 @@ const Footer = () => {
           <p className="text-gray-200">All Rights Reserved.</p>
         </div>
 
-        {/* SOCIAL + COPYRIGHT */}
+        {/* Copyright and Social Links */}
         <div className="pt-4 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400">{footerData.rights}</p>
+
+          {/* Social Media Icons */}
           <div className="flex space-x-4 mt-4 md:mt-0">
             {[
               { href: footerData.facebookLink, icon: <FaFacebookF />, label: "Facebook" },

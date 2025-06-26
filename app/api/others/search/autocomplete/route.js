@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { models } from "@/lib/connections.js"; // adjust if your import path differs
-const { Project, Area } = models;
+const { Project, Area, City, State } = models;
 
 export async function GET(req) {
   try {
@@ -24,13 +24,11 @@ export async function GET(req) {
       .select({ _id: 1, name: 1 });
 
     // Search Cities and return unique list
-    let citiesRaw = await Project.find({ city: regex })
+    const cities = await City.find({ name: regex })
       .limit(5)
-      .select({ _id: 1, city: 1 });
+      .select({ _id: 1, name: 1 });
 
-    const uniqueCities = [...new Set(citiesRaw.map(p => p.city))];
-
-    return NextResponse.json({ projects, areas, cities: uniqueCities });
+    return NextResponse.json({ projects, areas, cities });
   } catch (error) {
     console.error("Autocomplete Error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
