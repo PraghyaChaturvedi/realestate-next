@@ -28,9 +28,9 @@ export default async function SearchPage({ searchParams }) {
     // Suspense uses your loading.js as a fallback UI.
     // It allows the static parts of the page to render instantly while
     // the dynamic client component loads.
-    <Suspense>
+    // <Suspense>
       <SearchPageClient initialProjects={initialProjects} />
-    </Suspense>
+    // </Suspense>
   );
 }
 

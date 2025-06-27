@@ -1,19 +1,17 @@
 import { models } from "@/lib/connections.js";
-// import { connectToDBs, Project, Area, Leads } from '@/lib/connections.js';
 const { Project } = models;
 
+// GET endpoint to fetch only recommended projects
 export async function GET(req) {
   try {
-    // await connectToDBs();
 
-    const projects = await Project.find({})
+    const projects = await Project.find({ isRecommended: true })
       .populate("area", ["_id", "name"])
       .populate("builder", ["_id", "name"])
       .populate("state", ["_id", "name"])
       .populate("city", ["_id", "name"])
       .sort({ createdAt: -1 });
-      
-      // console.log(projects);
+
     return new Response(JSON.stringify({ success: true, data: projects }), {
       status: 200,
     });
@@ -24,4 +22,6 @@ export async function GET(req) {
     });
   }
 }
+
+
 

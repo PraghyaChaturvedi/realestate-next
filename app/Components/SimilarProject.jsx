@@ -40,7 +40,7 @@ export default function SimilarProject({ id }) {
           <>
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Similar Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project) => (
+              {projects.slice(0,3).map((project) => (
                 <div key={project._id} className="hover:shadow-md bg-white rounded-xl shadow-lg">
                   <Cards project={project} />
                 </div>
