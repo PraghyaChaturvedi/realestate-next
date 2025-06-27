@@ -23,16 +23,11 @@ const ProjectGallery = ({ galleryImages = [], openImageExpanded }) => {
               src={
                 image?.url || "https://placehold.co/600x400?text=Coming+Soon"
               }
-              alt={image.description || "Expanded Image"}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             />
 
             {/* Overlay for image description */}
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-end p-5 bg-gradient-to-t from-black/50 to-transparent">
-              <p className="text-white text-sm font-medium">
-                {image.description || "Expanded Image"}
-              </p>
-            </div>
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-end p-5 bg-gradient-to-t from-black/50 to-transparent"></div>
 
             {/* Expand icon in the top-right corner */}
             <div className="absolute top-4 right-4 bg-black/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-all">
