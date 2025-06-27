@@ -66,19 +66,21 @@ const Cards = ({ project }) => {
   return (
     <div key={_id} className="relative w-full">
       {/* RERA status ribbon */}
-      <div className="absolute top-[14.25rem] -left-2 z-10">
-        <div className="bg-red-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-sm flex items-center shadow-lg relative">
-          <span>{project.reraNumber}</span>
+      { project.reraNumber &&
+        <div className="absolute top-[14.25rem] -left-2 z-10">
+          <div className="bg-red-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-sm flex items-center shadow-lg relative">
+            <span>{project.reraNumber}</span>
+          </div>
+          <div
+            className="absolute top-full left-1 w-0 h-0"
+            style={{
+              borderLeft: "7px solid transparent",
+              borderTop: "7px solid #dc2626",
+              marginLeft: "-1px",
+            }}
+          ></div>
         </div>
-        <div
-          className="absolute top-full left-1 w-0 h-0"
-          style={{
-            borderLeft: "7px solid transparent",
-            borderTop: "7px solid #dc2626",
-            marginLeft: "-1px",
-          }}
-        ></div>
-      </div>
+      }
 
       {/* Project card layout */}
       <div className="relative w-full overflow-hidden rounded-xl">

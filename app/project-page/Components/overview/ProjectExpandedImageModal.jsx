@@ -29,11 +29,7 @@ const ExpandedImageModal = ({ expandedImage, closeImageExpanded }) => {
             />
 
             {/* Image description below the image, centered */}
-            <div className="absolute bottom-6 left-0 right-0 text-center text-white">
-              <p className="text-base">
-                {expandedImage?.description || "Expanded Image"}
-              </p>
-            </div>
+            <div className="absolute bottom-6 left-0 right-0 text-center text-white"></div>
           </div>
         </div>
       )}
