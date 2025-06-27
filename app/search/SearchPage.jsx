@@ -150,7 +150,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
                 <input
                   type="text"
                   value={searchQuery}
-                  placeholder="e.g. 'Luxury Villas in South Delhi'"
+                  placeholder="Enter a location, builder,project or RERA number"
                   className="text-sm font-medium text-gray-800 focus:outline-none border-b border-gray-200 pb-1 w-full focus:border-red-500 transition-colors"
                   onFocus={() => setShowSuggestions(true)}
                   onChange={handleAutocompleteChange}

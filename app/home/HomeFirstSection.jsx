@@ -296,7 +296,7 @@ function HomeFirstSection( { data } ) {
                         }
                       }}
                       className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 text-sm sm:text-base"
-                      placeholder="Enter your desired location"
+                      placeholder="Enter a location, builder,project or RERA number"
                     />
                   </div>
                   
