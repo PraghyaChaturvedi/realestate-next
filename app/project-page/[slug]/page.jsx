@@ -1,8 +1,8 @@
 import ProjectClientPage from "./ProjectClientPage";
 
-async function getProjectDetails(id) {
+async function getProjectDetails(slug) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/api/project-page/${id}`);
+  const res = await fetch(`${baseUrl}/api/project-page/${slug}`);
 
   if (!res.ok) {
     console.error("Failed to fetch project details");
@@ -14,8 +14,8 @@ async function getProjectDetails(id) {
 
 //  Dynamic SEO Tags
 export async function generateMetadata({ params }) {
-  const { id } = await params; 
-  const project = await getProjectDetails(id);
+  const { slug } = await params; 
+  const project = await getProjectDetails(slug);
 
   if (!project) {
     return {
@@ -38,12 +38,12 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `${project.projectName} | Shelter4U`,
       description: project.description || `Explore features, location, and gallery of ${project.projectName}.`,
-      url: `https://shelter4u.in/project-page/${id}`,
+      url: `https://shelter4u.in/project-page/${slug}`,
       type: "article",
       images: [
         {
           url: project.coverImages?.[0]?.url || "/logo.png",
-          width: 1200,
+          wslugth: 1200,
           height: 630,
           alt: project.projectName,
         },
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }) {
       images: [project.coverImages?.[0]?.url || "/logo.png"],
     },
     alternates: {
-      canonical: `https://shelter4u.in/project-page/${id}`,
+      canonical: `https://shelter4u.in/project-page/${slug}`,
     },
     robots: {
       index: true,
@@ -67,8 +67,8 @@ export async function generateMetadata({ params }) {
 
 
 export default async function ProjectDetailPage({ params }) {
-  const { id } = await params; 
-  const project = await getProjectDetails(id);
+  const { slug } = await params; 
+  const project = await getProjectDetails(slug);
 
   return <ProjectClientPage project={project} />;
 }

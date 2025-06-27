@@ -32,6 +32,7 @@ const Cards = ({ project }) => {
     maxSize,
     builder,
     area,
+    slug,
     _id,
   } = project;
 
@@ -51,12 +52,12 @@ const Cards = ({ project }) => {
   };
 
   // Share button handler using Web Share API
-  const handleShare = async (e, id) => {
+  const handleShare = async (e, slug) => {
     e.preventDefault();
     await navigator.share({
       title: `Check out this project: ${projectName}`,
       text:  `Explore the details of ${projectName} by ${builder?.name} in ${area?.name}.`,
-      url: `${window.location.origin}/project-page/${id}`,
+      url: `${window.location.origin}/project-page/${slug}`,
     });
   };
 
@@ -85,7 +86,7 @@ const Cards = ({ project }) => {
           
           {/* Image section with overlay */}
           <div className="relative h-60 w-full overflow-hidden group">
-            <Link href={`/project-page/${_id}`} className="w-full h-full block">
+            <Link href={`/project-page/${slug}`} className="w-full h-full block">
               <img
                 src={coverImages[0]?.url || "https://placehold.co/600x400?text=Coming+Soon"}
                 alt={projectName}
@@ -189,13 +190,13 @@ const Cards = ({ project }) => {
           <div className="px-5 pb-5 pt-3">
             <div className="flex justify-between">
               <Link
-                href={`/project-page/${_id}`}
+                href={`/project-page/${slug}`}
                 className="text-red-600 text-sm font-medium flex items-center hover:text-red-800 transition-colors"
               >
                 <FiEye className="mr-1" /> View Details
               </Link>
               <button
-                onClick={(e) => handleShare(e, `${_id}`)}
+                onClick={(e) => handleShare(e, `${slug}`)}
                 className="text-gray-600 text-sm font-medium flex items-center hover:text-gray-800 transition-colors"
               >
                 <FiShare2 className="mr-1" /> Share
