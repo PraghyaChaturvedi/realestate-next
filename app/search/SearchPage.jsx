@@ -203,18 +203,126 @@ const SearchPageClient = ({ initialProjects = [] }) => {
                 <input
                   type="text"
                   value={searchQuery}
-                  placeholder="e.g. 'Luxury Villas in South Delhi'"
+                  placeholder="Enter a Location, Builder, project or RERA Number"
                   className="text-sm font-medium text-gray-800 focus:outline-none border-b border-gray-200 pb-1 w-full focus:border-red-500 transition-colors"
                   onFocus={() => setShowSuggestions(true)}
                   onChange={handleAutocompleteChange}
                 />
-                {showSuggestions && (suggestions.areas.length > 0 || suggestions.projects.length > 0 || suggestions.cities.length > 0) && (
-                  <div className="z-50 absolute top-full mt-2 w-full bg-white shadow-lg rounded-md max-h-64 overflow-y-auto border border-gray-200">
-                    {suggestions.areas.map((area) => (<div key={area._id} onClick={() => handleSuggestionClick(() => router.push(`/search?area=${area.name}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{area.name}</div>))}
-                    {suggestions.cities.map((city) => (<div key={city._id} onClick={() => handleSuggestionClick(() => router.push(`/search?city=${city.name}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{city.name}</div>))}
-                    {suggestions.projects.map((project) => (<div key={project._id} onClick={() => handleSuggestionClick(() => router.push(`/project-page/${project._id}`))} className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer">{project.projectName}</div>))}
-                  </div>
-                )}
+                {((suggestions.areas && suggestions.areas.length > 0) ||
+                    (suggestions.projects && suggestions.projects.length > 0) ||
+                    (suggestions.cities && suggestions.cities.length > 0) ||
+                    suggestions.value) && (
+                    <div className="absolute top-full mt-1 sm:mt-2 w-full bg-white shadow-lg rounded-md z-50 max-h-60 sm:max-h-64 overflow-y-auto border border-gray-200">
+                      
+                      {/*  : General search option. */}
+                      {suggestions.value && (
+                        <div
+                          className="px-3 sm:px-4 py-1 sm:py-2 hover:bg-gray-100 text-xs sm:text-sm cursor-pointer"
+                          onClick={() => {
+                            const params = new URLSearchParams();
+                            params.set("q", suggestions.value);
+                            if (selectedCity && selectedCity !== "All Cities") {  
+                              params.set("city", selectedCity);
+                            }
+                            router.push(`/search?${params.toString()}`);
+                            setSuggestions({
+                              value: "",
+                              areas: [],
+                              projects: [],
+                              cities: [],
+                            });
+                          }}
+                        >
+                          Search for "{suggestions.value}"
+                        </div>
+                      )}
+                      
+                      {/*  : Areas suggestions section. */}
+                      {suggestions.areas.length > 0 && (
+                        <>
+                          <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
+                            Areas
+                          </div>
+                          {suggestions.areas.map((area) => (
+                            <div
+                              key={area._id}
+                              onClick={() => {
+                                const params = new URLSearchParams();
+                                params.set("area", area.name);
+                                if (selectedCity && selectedCity !== "All Cities") {
+                                  params.set("city", selectedCity);
+                                }
+                                router.push(`/search?${params.toString()}`);
+                                setSuggestions({
+                                  value: "",
+                                  areas: [],
+                                  projects: [],
+                                  cities: [],
+                                });
+                              }}
+                              className="px-3 sm:px-4 py-1 sm:py-2 hover:bg-gray-100 text-xs sm:text-sm cursor-pointer"
+                            >
+                              {area.name}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                      
+                      {/*  : Cities suggestions section. */}
+                      {suggestions.cities.length > 0 && (
+                        <>
+                          <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
+                            Cities
+                          </div>
+                          {suggestions.cities.map((city) => (
+                            <div
+                              key={city._id}
+                              className="px-3 sm:px-4 py-1 sm:py-2 hover:bg-gray-100 text-xs sm:text-sm cursor-pointer"
+                              onClick={() => {
+                                const params = new URLSearchParams();
+                                params.set("city", city.name);
+                                router.push(`/search?${params.toString()}`);
+                                setSuggestions({
+                                  value: "",
+                                  areas: [],
+                                  projects: [],
+                                  cities: [],
+                                });
+                              }}
+                            >
+                              {city.name}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                      
+                      {/*  : Projects suggestions section. */}
+                      {suggestions.projects.length > 0 && (
+                        <>
+                          <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
+                            Projects
+                          </div>
+                          {suggestions.projects.map((project) => (
+                            <div
+                              key={project._id}
+                              onClick={() => {
+                                router.push(`/project-page/${project._id}`);
+                                setSuggestions({
+                                  value: "",
+                                  areas: [],
+                                  projects: [],
+                                  cities: [],
+                                });
+                              }}
+                              className="px-3 sm:px-4 py-1 sm:py-2 hover:bg-gray-100 text-xs sm:text-sm cursor-pointer"
+                            >
+                              {project.projectName}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  )}
               </div>
             </div>
           </div>
