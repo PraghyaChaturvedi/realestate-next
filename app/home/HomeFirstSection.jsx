@@ -155,7 +155,8 @@ function HomeFirstSection( { data } ) {
     const fetchCities = async () => {
       try {
         const response = await fetch(`${baseUrl}/api/city`);
-        const citiesData = await response.json();
+        let citiesData = await response.json();
+        citiesData.unshift({"name":"All Cities"}); // Add "All Cities" option at the beginning
         setCities(citiesData);
       } catch (error) {
         console.error("Error fetching cities:", error);
@@ -238,7 +239,7 @@ function HomeFirstSection( { data } ) {
                   </label>
                   <Dropdown
                     className="w-full border border-gray-300 rounded-lg text-sm sm:text-base p-dropdown-input-text:py-2 sm:p-dropdown-input-text:py-3"
-                    value={selectedCity}
+                    value={selectedCity? selectedCity : "All Cities"}
                     onChange={(e) => setSelectedCity(e.value)}
                     options={cities.map((c) => ({
                       label: c.name,
