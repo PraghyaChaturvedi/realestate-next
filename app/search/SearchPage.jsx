@@ -241,4 +241,5 @@ const SearchPageClient = ({ initialProjects = [] }) => {
   );
 };
 
+
 export default SearchPageClient;
