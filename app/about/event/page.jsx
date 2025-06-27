@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import EventClient from './EventClient.jsx';
 
 //SEO Tags
@@ -55,6 +57,7 @@ export default async function EventPage() {
   }
 
   const data = await res.json();
+  
 
   return <EventClient events={data.event} />;
 }

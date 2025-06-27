@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import TeamClient from './TeamClient';
 
 //SEO Tags

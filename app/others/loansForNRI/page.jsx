@@ -1,4 +1,6 @@
 // app/about/loan/page.jsx
+export const dynamic = "force-dynamic";
+
 import LoansForNrisClient from "./LoansForNrisClient";
 
 export default async function LoansForNrisPage() {

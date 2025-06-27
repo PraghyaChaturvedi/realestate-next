@@ -1,4 +1,6 @@
 // app/about/legal/page.jsx
+export const dynamic = "force-dynamic";
+
 import LegalInformationClient from "./LegalInformationClient.jsx";
 
 export default async function LegalPage() {

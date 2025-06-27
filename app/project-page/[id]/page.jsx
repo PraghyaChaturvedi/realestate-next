@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import ProjectClientPage from "./ProjectClientPage";
 
 async function getProjectDetails(id) {

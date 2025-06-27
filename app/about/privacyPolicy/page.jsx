@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import PrivacyPolicyClient from './PrivacyPolicyClient';
 
 //SEO Tags

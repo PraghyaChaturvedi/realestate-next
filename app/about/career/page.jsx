@@ -1,4 +1,5 @@
 // app/about/career/page.jsx
+export const dynamic = "force-dynamic";
 
 import CareerClient from "./CareerClient";
 

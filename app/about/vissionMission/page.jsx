@@ -1,4 +1,5 @@
-// import dynamic from "next/dynamic";
+export const dynamic = "force-dynamic";
+
 
 // const VisionMissionClient = dynamic(() => import("./VissionMissionClient.jsx"), {
 //   ssr: true,
