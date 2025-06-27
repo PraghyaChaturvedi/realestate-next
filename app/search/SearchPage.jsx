@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Cards from "../Components/Cards.jsx";
+import CustomPriceDropdown from "./CustomPriceDropdown.jsx"; 
 import {
   FiSearch,
   FiMapPin,
@@ -13,13 +14,11 @@ import {
   FiClock,
 } from "react-icons/fi";
 
-// This component receives its initial data as a prop from the server component.
 const SearchPageClient = ({ initialProjects = [] }) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Initialize state from search params, which are available immediately
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [projects, setProjects] = useState(initialProjects);
   const [filters, setFilters] = useState({
@@ -35,7 +34,6 @@ const SearchPageClient = ({ initialProjects = [] }) => {
   const searchRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   
-  // This is a common pattern to avoid hydration errors with certain components
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -50,8 +48,48 @@ const SearchPageClient = ({ initialProjects = [] }) => {
   const projectType = ["Residential", "Commercial", "Land"];
   const projectStatus = ["Under Construction", "Ready to Move"];
   const unitType = ["1BHK", "2BHK", "3BHK", "4BHK", "Shops", "Offices", "Villas", "Plots"];
+  
+  const basePriceOptions = [
+    { value: "2500000", label: "25 Lakh" },
+    { value: "5000000", label: "50 Lakh" },
+    { value: "7500000", label: "75 Lakh" },
+    { value: "10000000", label: "1 Crore" },
+    { value: "20000000", label: "2 Crore" },
+    { value: "30000000", label: "3 Crore" },
+    { value: "40000000", label: "4 Crore" },
+    { value: "50000000", label: "5 Crore" },
+    { value: "60000000", label: "6 Crore" },
+    { value: "70000000", label: "7 Crore" },
+    { value: "80000000", label: "8 Crore" },
+    { value: "90000000", label: "9 Crore" },
+    { value: "100000000", label: "10 Crore" },
+    { value: "110000000", label: "11 Crore" },
+    { value: "120000000", label: "12 Crore" },
+    { value: "130000000", label: "13 Crore" },
+    { value: "140000000", label: "14 Crore" },
+    { value: "150000000", label: "15 Crore" },
+  ];
 
-  // Re-sync projects from server props if they change (e.g., on navigation)
+  // *** LOGIC FOR DYNAMICALLY DISABLING OPTIONS ***
+  const minPriceOptions = useMemo(() => {
+    if (!filters.maxBudget) return basePriceOptions;
+    const maxVal = parseInt(filters.maxBudget, 10);
+    return basePriceOptions.map(opt => ({
+      ...opt,
+      disabled: parseInt(opt.value, 10) >= maxVal,
+    }));
+  }, [filters.maxBudget]);
+
+  const maxPriceOptions = useMemo(() => {
+    if (!filters.minBudget) return basePriceOptions;
+    const minVal = parseInt(filters.minBudget, 10);
+    return basePriceOptions.map(opt => ({
+      ...opt,
+      disabled: parseInt(opt.value, 10) <= minVal,
+    }));
+  }, [filters.minBudget]);
+  // *** END OF LOGIC ***
+
   useEffect(() => {
     setProjects(initialProjects);
   }, [initialProjects]);
@@ -69,9 +107,17 @@ const SearchPageClient = ({ initialProjects = [] }) => {
   };
 
   const handleFilterChange = (filterName, value) => {
-    const updatedFilters = { ...filters, [filterName]: value };
-    setFilters(updatedFilters);
-    // Don't navigate immediately on every keystroke for budget inputs
+    // *** UX IMPROVEMENT: Auto-clear conflicting selections ***
+    const newFilters = { ...filters, [filterName]: value };
+    if (filterName === 'minBudget' && value && newFilters.maxBudget && parseInt(value, 10) >= parseInt(newFilters.maxBudget, 10)) {
+        newFilters.maxBudget = ''; // Clear max if min is >= max
+    }
+    if (filterName === 'maxBudget' && value && newFilters.minBudget && parseInt(value, 10) <= parseInt(newFilters.minBudget, 10)) {
+        newFilters.minBudget = ''; // Clear min if max is <= min
+    }
+    setFilters(newFilters);
+    // *** END OF UX IMPROVEMENT ***
+
     if (filterName !== "minBudget" && filterName !== "maxBudget") {
       const newQuery = buildQueryString({ [filterName]: value, q: "" });
       router.push(`/search?${newQuery}`);
@@ -82,14 +128,14 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     e.preventDefault();
     const newQuery = buildQueryString({ 
       q: searchQuery,
-      minBudget: filters.minBudget,
-      maxBudget: filters.maxBudget,
-      status: filters.status, // Include status in search
+      ...filters,
     });
     router.push(`/search?${newQuery}`);
     setShowSuggestions(false);
   };
-
+  
+  // ... (rest of the component is the same)
+  
   const handleSuggestionClick = (callback) => {
     setShowSuggestions(false);
     callback();
@@ -138,10 +184,10 @@ const SearchPageClient = ({ initialProjects = [] }) => {
           </p>
         </div>
 
-        {/* Use a form for better semantics and accessibility */}
         <form onSubmit={handleSearchSubmit} className="mb-6 md:mb-10 w-full">
           <div className="flex flex-col p-4 bg-white rounded-2xl shadow-lg border border-gray-100 mb-4" ref={searchRef}>
-            <div className="flex items-center w-full">
+            {/* Search Input */}
+             <div className="flex items-center w-full">
               <div className="p-2 bg-red-50 rounded-lg mr-3">
                 <FiMapPin className="text-red-600 text-xl" />
               </div>
@@ -167,6 +213,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
           </div>
 
           <div className="flex flex-col xl:flex-row p-4 bg-white rounded-2xl shadow-lg border border-gray-100">
+             {/* Other Filters */}
             <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mr-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiHome className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full relative">
@@ -203,17 +250,29 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
-            <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:ml-4">
+            {/* UPDATED PRICE RANGE SECTION USING CUSTOM COMPONENT */}
+            <div className="flex items-center flex-2 mb-2 xl:mb-0 xl:ml-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiTag className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full">
                 <label className="text-xs font-medium text-gray-500 mb-1">Price Range (₹)</label>
                 <div className="flex items-center w-full space-x-2">
-                  <input type="number" value={filters.minBudget} onChange={(e) => handleFilterChange("minBudget", e.target.value)} placeholder="Min" className="text-sm font-medium text-gray-800 focus:outline-none border-b border-gray-200 pb-1 w-1/2 focus:border-red-500 transition-colors"/>
+                  <CustomPriceDropdown
+                    placeholder="Min Price"
+                    options={minPriceOptions}
+                    value={filters.minBudget}
+                    onChange={(value) => handleFilterChange("minBudget", value)}
+                  />
                   <span className="text-gray-400">-</span>
-                  <input type="number" value={filters.maxBudget} onChange={(e) => handleFilterChange("maxBudget", e.target.value)} placeholder="Max" className="text-sm font-medium text-gray-800 focus:outline-none border-b border-gray-200 pb-1 w-1/2 focus:border-red-500 transition-colors"/>
+                  <CustomPriceDropdown
+                    placeholder="Max Price"
+                    options={maxPriceOptions}
+                    value={filters.maxBudget}
+                    onChange={(value) => handleFilterChange("maxBudget", value)}
+                  />
                 </div>
               </div>
             </div>
+            {/* END OF UPDATED SECTION */}
 
             <button type="submit" className="bg-red-600 text-white px-6 py-3 rounded-xl cursor-pointer w-full xl:w-auto mt-4 xl:mt-0 xl:ml-6 hover:bg-red-700 transition-colors shadow-md hover:shadow-lg flex items-center justify-center font-medium">
               <FiSearch className="mr-2" />
@@ -240,6 +299,5 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     </div>
   );
 };
-
 
 export default SearchPageClient;
