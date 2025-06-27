@@ -3,17 +3,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
-// The component now expects options to have an optional `disabled` property.
+//  : This component renders a custom dropdown for selecting price options, supporting disabled states.
 const CustomPriceDropdown = ({ options, value, onChange, placeholder }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false); //  : Tracks dropdown open/close state.
+  const dropdownRef = useRef(null); //  : Ref for detecting outside clicks.
 
   const handleSelect = (optionValue) => {
-    onChange(optionValue);
-    setIsOpen(false);
+    onChange(optionValue); //  : Call parent handler with selected value.
+    setIsOpen(false); //  : Close dropdown after selection.
   };
 
-  // Close dropdown if clicked outside
+  //  : Close dropdown if clicked outside.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -24,6 +24,7 @@ const CustomPriceDropdown = ({ options, value, onChange, placeholder }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  //  : Find the label for the selected value, or use placeholder.
   const selectedLabel = options.find(opt => opt.value === value)?.label || placeholder;
 
   return (
@@ -53,16 +54,14 @@ const CustomPriceDropdown = ({ options, value, onChange, placeholder }) => {
             {options.map((option) => (
               <li
                 key={option.value}
-                // *** MODIFICATION START ***
-                // Only trigger onClick if the option is NOT disabled
+                //  : Only trigger onClick if the option is NOT disabled.
                 onClick={() => !option.disabled && handleSelect(option.value)}
-                // Apply different styles for disabled options
+                //  : Apply different styles for disabled options.
                 className={`px-4 py-2 text-sm ${
                   option.disabled
                     ? "text-gray-400 bg-gray-50 cursor-not-allowed"
                     : "text-gray-700 hover:bg-red-50 hover:text-red-700 cursor-pointer"
                 }`}
-                // *** MODIFICATION END ***
               >
                 {option.label}
               </li>

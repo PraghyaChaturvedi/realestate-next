@@ -5,13 +5,14 @@ import Cards from './Cards.jsx';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+//  : This component fetches and displays a list of similar projects based on the current project ID.
 export default function SimilarProject({ id }) {
-  // Local state to store fetched similar projects
+  //  : Local state to store fetched similar projects.
   const [projects, setProjects] = useState([]);
 
-  // Fetch similar projects on component mount or when `id` changes
+  //  : Fetch similar projects on component mount or when `id` changes.
   useEffect(() => {
-    if (!id) return; // Exit if no ID is provided
+    if (!id) return; //  : Exit if no ID is provided.
 
     const fetchProjects = async () => {
       try {
@@ -19,23 +20,24 @@ export default function SimilarProject({ id }) {
         const data = await response.json();
 
         if (!response.ok) {
-          setProjects([]); // Set empty array on fetch error
+          setProjects([]); //  : Set empty array on fetch error.
         } else {
-          setProjects(data); // Set fetched projects
+          setProjects(data); //  : Set fetched projects.
         }
       } catch (error) {
         console.error('Error fetching similar projects:', error);
-        setProjects([]); // Set empty on any error
+        setProjects([]); //  : Set empty on any error.
       }
     };
 
     fetchProjects();
-  }, [id]); // Run effect when ID changes
+  }, [id]); //  : Run effect when ID changes.
 
   return (
+    //  : Section for displaying similar projects or a message if none found.
     <section className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* If there are similar projects, render them in grid */}
+        {/*  : If there are similar projects, render them in a grid. */}
         {Array.isArray(projects) && projects.length > 0 ? (
           <>
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Similar Projects</h2>
@@ -48,7 +50,7 @@ export default function SimilarProject({ id }) {
             </div>
           </>
         ) : (
-          // If no similar projects found, show message
+          //  : If no similar projects found, show message.
           <div className="text-center py-6">
             <p className="text-lg font-medium text-gray-600 italic tracking-wide mt-10">
               No similar projects

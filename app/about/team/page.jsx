@@ -2,8 +2,11 @@ export const dynamic = "force-dynamic";
 
 import TeamClient from './TeamClient';
 
+//  : This file fetches and displays the team members using the TeamClient component.
+
 //SEO Tags
 export async function generateMetadata() {
+  //  : Returns static SEO metadata for the team page.
   return {
     title: "Meet Our Team | Shelter4U",
     description:
@@ -50,12 +53,15 @@ export async function generateMetadata() {
 
 
 export default async function TeamPage() {
+  //  : Fetch team members from the API endpoint.
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/team`);
 
   if (!res.ok) {
+    //  : Throw an error if the fetch fails.
     throw new Error('Failed to fetch team members');
   }
 
+  //  : Parse the response as JSON and pass the data to the client component.
   const data = await res.json();
 
   return <TeamClient teamMembers={data.team || []} />;

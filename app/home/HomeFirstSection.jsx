@@ -9,7 +9,7 @@ import { Dropdown } from "primereact/dropdown";
 import '../project-page/style.css';
 
 /**
- * HomeFirstSection Component
+ *  : This component is the hero section of the home page, featuring animated typing text, search with autocomplete, and animated statistics.
  * 
  * A comprehensive hero section component for a real estate website that includes:
  * - Animated typing text display
@@ -27,46 +27,46 @@ import '../project-page/style.css';
  *   - counts: Array of statistical data for counters
  */
 function HomeFirstSection( { data } ) {
-  // Next.js router for navigation
+  //  : Next.js router for navigation.
   const router = useRouter();
   
-  // State for search functionality
-  const [location, setLocation] = useState(""); // User input for location search
-  const [cities, setCities] = useState([]); // Array of available cities
-  const [selectedCity, setSelectedCity] = useState(null); // Selected city from dropdown
-  const [isClient, setIsClient] = useState(false); // Client-side rendering flag for hydration
+  //  : State for search functionality.
+  const [location, setLocation] = useState(""); //  : User input for location search.
+  const [cities, setCities] = useState([]); //  : Array of available cities.
+  const [selectedCity, setSelectedCity] = useState(null); //  : Selected city from dropdown.
+  const [isClient, setIsClient] = useState(false); //  : Client-side rendering flag for hydration.
   
-  // Base URL for API calls from environment variables
+  //  : Base URL for API calls from environment variables.
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   
-  // State for search autocomplete suggestions
+  //  : State for search autocomplete suggestions.
   const [suggestions, setSuggestions] = useState({
-    value: "", // Current search value
-    areas: [], // Array of area suggestions
-    projects: [], // Array of project suggestions
-    cities: [], // Array of city suggestions
+    value: "", //  : Current search value.
+    areas: [], //  : Array of area suggestions.
+    projects: [], //  : Array of project suggestions.
+    cities: [], //  : Array of city suggestions.
   });
 
-  // State for animated typing text effect
-  const [displayText, setDisplayText] = useState(""); // Currently displayed text
-  const [currentIndex, setCurrentIndex] = useState(0); // Current character index in typing animation
-  const [typingComplete, setTypingComplete] = useState(false); // Flag to track if typing cycle is complete
+  //  : State for animated typing text effect.
+  const [displayText, setDisplayText] = useState(""); //  : Currently displayed text.
+  const [currentIndex, setCurrentIndex] = useState(0); //  : Current character index in typing animation.
+  const [typingComplete, setTypingComplete] = useState(false); //  : Flag to track if typing cycle is complete.
 
-  // Extract data props for typing animation
+  //  : Extract data props for typing animation.
   const firstLine = data?.firstLine;
   const secondLine = data?.secondLine;
 
   /**
-   * Effect to set client-side rendering flag
-   * Prevents hydration mismatches for components that behave differently on server vs client
+   *  : Effect to set client-side rendering flag.
+   * Prevents hydration mismatches for components that behave differently on server vs client.
    */
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   /**
-   * Handle search form submission
-   * Constructs URL parameters and navigates to search results page
+   *  : Handle search form submission.
+   * Constructs URL parameters and navigates to search results page.
    * 
    * @param {Event} e - Form submission event
    */
@@ -74,70 +74,70 @@ function HomeFirstSection( { data } ) {
     e.preventDefault();
     const params = new URLSearchParams();
     
-    // Add location parameter if provided
+    //  : Add location parameter if provided.
     if (location && location.trim()) {
       params.set("q", location.trim());
     }
     
-    // Add city parameter if selected and not "All Cities"
+    //  : Add city parameter if selected and not "All Cities".
     if (selectedCity && selectedCity !== "All Cities") {
       params.set("city", selectedCity);
     }
     
-    // Navigate to search results page with parameters
+    //  : Navigate to search results page with parameters.
     router.push(`/search?${params.toString()}`);
   };
 
-  // Ref for search location input to handle outside clicks
+  //  : Ref for search location input to handle outside clicks.
   const searchLocationRef = useRef(null);
 
   /**
-   * Typing animation effect
-   * Creates a typewriter effect that cycles through firstLine and secondLine
-   * Automatically restarts after completion with a 3-second delay
+   *  : Typing animation effect.
+   * Creates a typewriter effect that cycles through firstLine and secondLine.
+   * Automatically restarts after completion with a 3-second delay.
    */
   useEffect(() => {
-    // Guard clause: don't run if data isn't available
+    //  : Guard clause: don't run if data isn't available.
     if (!firstLine || !secondLine) return;
     
     const handleTyping = () => {
-      // Typing first line
+      //  : Typing first line.
       if (currentIndex < firstLine.length) {
         setDisplayText((prevText) => prevText + firstLine[currentIndex]);
         setCurrentIndex((prevIndex) => prevIndex + 1);
       } 
-      // Add line break after first line
+      //  : Add line break after first line.
       else if (currentIndex === firstLine.length) {
         setDisplayText((prevText) => prevText + "\n");
         setCurrentIndex((prevIndex) => prevIndex + 1);
       } 
-      // Typing second line
+      //  : Typing second line.
       else if (currentIndex < firstLine.length + secondLine.length + 1) {
         const secondLineIndex = currentIndex - firstLine.length - 1;
         setDisplayText((prevText) => prevText + secondLine[secondLineIndex]);
         setCurrentIndex((prevIndex) => prevIndex + 1);
       } 
-      // Typing complete - reset after delay
+      //  : Typing complete - reset after delay.
       else {
         setTypingComplete(true);
         setTimeout(() => {
           setDisplayText("");
           setCurrentIndex(0);
           setTypingComplete(false);
-        }, 3000); // 3-second pause before restarting
+        }, 3000); //  : 3-second pause before restarting.
       }
     };
 
-    // Only run typing animation if not in complete state
+    //  : Only run typing animation if not in complete state.
     if (!typingComplete) {
-      const timer = setTimeout(handleTyping, 75); // 75ms delay between characters
+      const timer = setTimeout(handleTyping, 75); //  : 75ms delay between characters.
       return () => clearTimeout(timer);
     }
   }, [currentIndex, typingComplete, firstLine, secondLine]);
 
   /**
-   * Effect to handle clicks outside search suggestions
-   * Closes the suggestions dropdown when user clicks elsewhere
+   *  : Effect to handle clicks outside search suggestions.
+   * Closes the suggestions dropdown when user clicks elsewhere.
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -150,17 +150,17 @@ function HomeFirstSection( { data } ) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Effect to fetch cities from API
+  //  : Effect to fetch cities from API.
   useEffect(() => {
     const fetchCities = async () => {
       try {
         const response = await fetch(`${baseUrl}/api/city`);
         let citiesData = await response.json();
-        citiesData.unshift({"name":"All Cities"}); // Add "All Cities" option at the beginning
+        citiesData.unshift({"name":"All Cities"}); //  : Add "All Cities" option at the beginning.
         setCities(citiesData);
       } catch (error) {
         console.error("Error fetching cities:", error);
-        setCities([]); // Set empty array on error
+        setCities([]); //  : Set empty array on error.
       }
     };
     
@@ -168,11 +168,12 @@ function HomeFirstSection( { data } ) {
   }, [baseUrl]);
 
   return (
+    //  : Main container for the hero section with background and overlay.
     <div className="overflow-x-hidden">
-      {/* Main hero section container */}
+      {/*  : Main hero section container. */}
       <div className="relative lg:static lg:min-h-[100vh]">
         
-        {/* Background image with overlay */}
+        {/*  : Background image with overlay. */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -180,28 +181,28 @@ function HomeFirstSection( { data } ) {
             backgroundPosition: "center bottom",
           }}
         >
-          {/* Gradient overlay for better text readability */}
+          {/*  : Gradient overlay for better text readability. */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/80"></div>
         </div>
 
-        {/* Main content area with increased padding bottom for more space */}
+        {/*  : Main content area with increased padding bottom for more space. */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-48 relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 items-start">
             
-            {/* Left content section */}
+            {/*  : Left content section. */}
             <div className="space-y-8 lg:mt-0">
               
-              {/* Animated typing text container with fixed height to prevent layout shifts */}
+              {/*  : Animated typing text container with fixed height to prevent layout shifts. */}
               <div className="min-h-[80px] sm:min-h-[150px] md:min-h-[150px]">
                 <h1 className="text-2xl sm:text-5xl md:text-5xl lg:text-5xl font-bold text-gray-700 leading-tight whitespace-pre-line">
-                  {/* Display animated text with HTML support */}
+                  {/*  : Display animated text with HTML support. */}
                   <span dangerouslySetInnerHTML={{ __html: displayText }} />
-                  {/* Animated cursor */}
+                  {/*  : Animated cursor. */}
                   <span className="typing-cursor inline-block w-[1ch]">|</span>
                 </h1>
               </div>
               
-              {/* Descriptive paragraphs with glass morphism effect */}
+              {/*  : Descriptive paragraphs with glass morphism effect. */}
               <div className="space-y-6 max-w-xl">
                 {data?.paragraphOne && (
                   <p className="text-base sm:text-lg text-gray-700 p-3 px-4 backdrop-blur-sm bg-white/50 rounded-full">
@@ -216,23 +217,23 @@ function HomeFirstSection( { data } ) {
               </div>
             </div>
 
-            {/* Right content - Search card with sticky positioning on large screens */}
+            {/*  : Right content - Search card with sticky positioning on large screens. */}
             <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 w-full lg:sticky lg:top-20">
               
-              {/* Search card header */}
+              {/*  : Search card header. */}
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
                   Search
                 </h3>
               </div>
               
-              {/* Search form */}
+              {/*  : Search form. */}
               <form
                 onSubmit={handleSearch}
                 className="space-y-4 sm:space-y-6"
               >
                 
-                {/* City selection dropdown */}
+                {/*  : City selection dropdown. */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                     City
@@ -251,16 +252,16 @@ function HomeFirstSection( { data } ) {
                   />
                 </div>
 
-                {/* Location input with autocomplete functionality */}
+                {/*  : Location input with autocomplete functionality. */}
                 <div className="relative" ref={searchLocationRef}>
                   <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                     Location
                   </label>
                   <div className="relative">
-                    {/* Location marker icon */}
+                    {/*  : Location marker icon. */}
                     <HiLocationMarker className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg sm:text-xl" />
                     
-                    {/* Location input field */}
+                    {/*  : Location input field. */}
                     <input
                       type="text"
                       value={location}
@@ -268,7 +269,7 @@ function HomeFirstSection( { data } ) {
                         const value = e.target.value;
                         setLocation(value);
 
-                        // Don't fetch suggestions for queries shorter than 3 characters
+                        //  : Don't fetch suggestions for queries shorter than 3 characters.
                         if (value.length < 3) {
                           setSuggestions({
                             value: value,
@@ -279,7 +280,7 @@ function HomeFirstSection( { data } ) {
                           return;
                         }
 
-                        // Fetch autocomplete suggestions from API
+                        //  : Fetch autocomplete suggestions from API.
                         try {
                           const res = await fetch(
                             `${baseUrl}/api/search/autocomplete?q=${value}`
@@ -287,7 +288,7 @@ function HomeFirstSection( { data } ) {
                           const data = await res.json();
                           setSuggestions({ ...data, value: value });
                         } catch (err) {
-                          // Silently handle errors and reset suggestions
+                          //  : Silently handle errors and reset suggestions.
                           setSuggestions({
                             value: "",
                             areas: [],
@@ -301,14 +302,14 @@ function HomeFirstSection( { data } ) {
                     />
                   </div>
                   
-                  {/* Autocomplete suggestions dropdown */}
+                  {/*  : Autocomplete suggestions dropdown. */}
                   {((suggestions.areas && suggestions.areas.length > 0) ||
                     (suggestions.projects && suggestions.projects.length > 0) ||
                     (suggestions.cities && suggestions.cities.length > 0) ||
                     suggestions.value) && (
                     <div className="absolute top-full mt-1 sm:mt-2 w-full bg-white shadow-lg rounded-md z-50 max-h-60 sm:max-h-64 overflow-y-auto border border-gray-200">
                       
-                      {/* General search option */}
+                      {/*  : General search option. */}
                       {suggestions.value && (
                         <div
                           className="px-3 sm:px-4 py-1 sm:py-2 hover:bg-gray-100 text-xs sm:text-sm cursor-pointer"
@@ -331,7 +332,7 @@ function HomeFirstSection( { data } ) {
                         </div>
                       )}
                       
-                      {/* Areas suggestions section */}
+                      {/*  : Areas suggestions section. */}
                       {suggestions.areas.length > 0 && (
                         <>
                           <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
@@ -362,7 +363,7 @@ function HomeFirstSection( { data } ) {
                         </>
                       )}
                       
-                      {/* Cities suggestions section */}
+                      {/*  : Cities suggestions section. */}
                       {suggestions.cities.length > 0 && (
                         <>
                           <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
@@ -390,7 +391,7 @@ function HomeFirstSection( { data } ) {
                         </>
                       )}
                       
-                      {/* Projects suggestions section */}
+                      {/*  : Projects suggestions section. */}
                       {suggestions.projects.length > 0 && (
                         <>
                           <div className="px-3 sm:px-4 py-1 sm:py-2 border-t border-gray-100 text-xs font-bold text-gray-500">
@@ -419,12 +420,12 @@ function HomeFirstSection( { data } ) {
                   )}
                 </div>
 
-                {/* Animated search button */}
+                {/*  : Animated search button. */}
                 <motion.button
                   className="w-full bg-gray-900 text-white py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-800 transition duration-200 text-sm sm:text-base"
                   type="submit"
-                  whileHover={{ scale: 1.02 }} // Subtle scale on hover
-                  whileTap={{ scale: 0.98 }} // Subtle scale on tap/click
+                  whileHover={{ scale: 1.02 }} //  : Subtle scale on hover
+                  whileTap={{ scale: 0.98 }} //  : Subtle scale on tap/click
                 >
                   Search
                 </motion.button>

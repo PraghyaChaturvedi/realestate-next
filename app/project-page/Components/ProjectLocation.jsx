@@ -1,20 +1,21 @@
 "use client";
 
+//  : This component displays the location section for a project, including an embedded map and optional landmarks.
 const ProjectLocation = ({ project }) => {
   return (
-    // Main container with styling
+    //  : Main container with styling for the location section.
     <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-      {/* Section heading */}
+      {/*  : Section heading for location. */}
       <h2 className="text-2xl font-semibold mb-8 text-gray-900">
         Location
       </h2>
 
-      {/* Map container */}
+      {/*  : Map container with optional Google Maps iframe. */}
       <div className="h-112 w-full bg-gray-100 rounded-xl mb-8 relative overflow-hidden border border-gray-200">
-        {/* Conditionally render iframe if mapLink is available */}
+        {/*  : Conditionally render iframe if mapLink is available. */}
         {project?.mapLink && (
           <iframe
-            src={project.mapLink} // Google Maps embed link
+            src={project.mapLink} //  : Google Maps embed link.
             width="800"
             height="450"
             style={{ border: 0 }}
@@ -26,7 +27,7 @@ const ProjectLocation = ({ project }) => {
         )}
       </div>
 
-      {/* Optional address details (commented out) */}
+      {/*  : Optional address details (currently commented out). */}
       {/* 
       <div className="space-y-6">
         <div className="flex gap-6">
@@ -50,7 +51,7 @@ const ProjectLocation = ({ project }) => {
       </div> 
       */}
 
-      {/* Display landmarks if provided */}
+      {/*  : Display landmarks if provided. */}
       {project?.landmarks && (
         <div className="mt-10">
           <p className="text-gray-700 text-base leading-relaxed">

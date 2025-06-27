@@ -1,9 +1,13 @@
 "use client";
 
+//  : This component renders a floating WhatsApp button that opens a chat with a preset message.
 const Whatsapp = () => {
   return (
+    //  : Fixed position container for the WhatsApp button at the bottom right.
     <div className="fixed bottom-5 right-10 z-100">
+      {/*  : WhatsApp link opens a new chat in a new tab. */}
       <a href="https://wa.me/919714512452?&text=Hello%2CI+am+looking+for+Properties" target="_blank">
+        {/*  : WhatsApp SVG icon. */}
         <svg
           x="0px"
           y="0px"

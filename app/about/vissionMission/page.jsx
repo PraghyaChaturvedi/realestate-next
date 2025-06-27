@@ -8,8 +8,11 @@ export const dynamic = "force-dynamic";
 
 import VisionMissionClient from "./VissionMissionClient.jsx";
 
+//  : This file fetches and displays the vision and mission using the VisionMissionClient component.
+
 //  Static SEO Tags
 export async function generateMetadata() {
+  //  : Returns static SEO metadata for the vision and mission page.
   return {
     title: "Our Vision and Mission | Shelter4U",
     description:
@@ -57,15 +60,18 @@ export default async function VisionMissionPage() {
   const API = process.env.NEXT_PUBLIC_BASE_URL;
 
   try {
+    //  : Fetch vision and mission data from the API endpoint.
     const res = await fetch(`${API}/api/about/vissionMission`);
 
     if (!res.ok) throw new Error("Failed to fetch");
 
+    //  : Parse the response and extract the first visionMission object.
     const data = await res.json();
     const visionData = data?.visionMission?.[0];
 
     return <VisionMissionClient data={visionData} />;
   } catch (error) {
+    //  : Log error and show fallback UI if fetch fails.
     console.error("VisionMission fetch error:", error.message);
     return (
       <div className="flex justify-center items-center h-64">

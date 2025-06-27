@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 /**
- * Header Component - Main navigation header for the Shelter4U website
+ *  : This component renders the main navigation header for the Shelter4U website, including responsive menus, dropdowns, and sticky behavior.
  * Features:
  * - Responsive design (mobile and desktop)
  * - Dropdown menus with hover/click interactions
@@ -14,28 +14,28 @@ import Link from "next/link";
  * - Sticky positioning
  */
 function Header() {
-  // Get current pathname for active link highlighting
+  //  : Get current pathname for active link highlighting.
   const pathname = usePathname();
   
-  // State for mobile menu toggle
+  //  : State for mobile menu toggle.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // State to track which dropdown is currently active (null, "aboutUs", "location", "type", "others")
+  //  : State to track which dropdown is currently active (null, "aboutUs", "location", "type", "others").
   const [activeDropdown, setActiveDropdown] = useState(null);
 
-  // Refs for dropdown containers - used for click outside detection
+  //  : Refs for dropdown containers - used for click outside detection.
   const aboutUsRef = useRef(null);
   const locationRef = useRef(null);
   const typeRef = useRef(null);
   const othersRef = useRef(null);
 
   /**
-   * Effect to handle clicking outside dropdowns to close them
-   * Listens for mousedown events and closes dropdowns if click is outside all dropdown containers
+   *  : Effect to handle clicking outside dropdowns to close them.
+   * Listens for mousedown events and closes dropdowns if click is outside all dropdown containers.
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Check if click is outside all dropdown containers
+      //  : Check if click is outside all dropdown containers.
       if (
         aboutUsRef.current &&
         !aboutUsRef.current.contains(event.target) &&
@@ -46,22 +46,22 @@ function Header() {
         othersRef.current &&
         !othersRef.current.contains(event.target)
       ) {
-        // Close all dropdowns
+        //  : Close all dropdowns.
         setActiveDropdown(null);
       }
     };
 
-    // Add event listener
+    //  : Add event listener for outside clicks.
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup function to remove event listener
+    //  : Cleanup function to remove event listener.
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   /**
-   * Toggle dropdown visibility
+   *  : Toggle dropdown visibility.
    * @param {string} dropdown - The dropdown identifier ("aboutUs", "location", "type", "others")
    */
   const toggleDropdown = (dropdown) => {
@@ -69,7 +69,7 @@ function Header() {
   };
 
   /**
-   * Check if current path matches the given path for active link styling
+   *  : Check if current path matches the given path for active link styling.
    * @param {string} path - The path to check against current pathname
    * @returns {boolean} - True if paths match
    */
@@ -78,8 +78,8 @@ function Header() {
   };
 
   /**
-   * Close mobile menu and all dropdowns
-   * Used when mobile menu items are clicked
+   *  : Close mobile menu and all dropdowns.
+   * Used when mobile menu items are clicked.
    */
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
@@ -87,12 +87,13 @@ function Header() {
   };
 
   return (
+    //  : Sticky header container with background.
     <div className="sticky top-0 z-50 bg-white">
       <div className="flex flex-col xl:flex-row justify-between items-center px-4 md:px-8 py-3">
         
-        {/* Logo and Mobile Menu Button Container */}
+        {/*  : Logo and Mobile Menu Button Container. */}
         <div className="w-full xl:w-auto flex justify-between items-center">
-          {/* Logo */}
+          {/*  : Logo. */}
           <Link href="/">
             <div className="pl-2 md:pl-4">
               <img
@@ -103,7 +104,7 @@ function Header() {
             </div>
           </Link>
           
-          {/* Mobile Menu Hamburger Button - only visible on mobile (xl:hidden) */}
+          {/*  : Mobile Menu Hamburger Button - only visible on mobile (xl:hidden). */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="xl:hidden text-2xl p-2 cursor-pointer text-red-600"
@@ -112,32 +113,32 @@ function Header() {
           </button>
         </div>
 
-        {/* Desktop Navigation Links - hidden on mobile, visible on xl screens and up */}
+        {/*  : Desktop Navigation Links - hidden on mobile, visible on xl screens and up. */}
         <div className="hidden xl:flex space-x-1 lg:space-x-2">
           
-          {/* Home Link */}
+          {/*  : Home Link. */}
           <Link
             href="/"
             className="px-3 py-2 relative group transition-colors duration-300 cursor-pointer font-normal"
           >
             Home
-            {/* Animated underline on hover */}
+            {/*  : Animated underline on hover. */}
             <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-red-600 transition-all duration-200 w-0 group-hover:w-full"></span>
           </Link>
 
-          {/* About Us Dropdown */}
+          {/*  : About Us Dropdown. */}
           <div
             className="relative"
             ref={aboutUsRef}
-            onMouseEnter={() => setActiveDropdown("aboutUs")} // Open on hover
-            onMouseLeave={() => setActiveDropdown(null)}      // Close when mouse leaves
+            onMouseEnter={() => setActiveDropdown("aboutUs")}
+            onMouseLeave={() => setActiveDropdown(null)}
           >
-            {/* Dropdown Trigger Button */}
+            {/*  : Dropdown Trigger Button. */}
             <button className="px-3 py-2 relative group transition-colors duration-300 cursor-pointer flex items-center font-normal">
               About Us
-              {/* Animated underline */}
+              {/*  : Animated underline. */}
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-red-600 transition-all duration-200 w-0 group-hover:w-full"></span>
-              {/* Dropdown Arrow Icon */}
+              {/*  : Dropdown Arrow Icon. */}
               <svg
                 className={`w-4 h-4 ml-1 transition-transform duration-200 ${
                   activeDropdown === "aboutUs" ? "rotate-180" : ""
@@ -155,7 +156,7 @@ function Header() {
               </svg>
             </button>
 
-            {/* Dropdown Menu - conditionally rendered */}
+            {/*  : Dropdown Menu - conditionally rendered. */}
             {activeDropdown === "aboutUs" && (
               <div className="absolute left-0 w-56 bg-white rounded-md shadow-lg z-50 py-1 border border-gray-100 animate-fadeIn">
                 <Link
@@ -198,7 +199,7 @@ function Header() {
             )}
           </div>
 
-          {/* Property By Location Dropdown */}
+          {/*  : Property By Location Dropdown. */}
           <div
             className="relative"
             ref={locationRef}
@@ -225,7 +226,7 @@ function Header() {
               </svg>
             </button>
 
-            {/* Location Dropdown Menu */}
+            {/*  : Location Dropdown Menu. */}
             {activeDropdown === "location" && (
               <div className="absolute left-0 w-48 bg-white rounded-md shadow-lg z-50 py-1 border border-gray-100 animate-fadeIn">
                 <Link
@@ -256,7 +257,7 @@ function Header() {
             )}
           </div>
 
-          {/* Property By Type Dropdown */}
+          {/*  : Property By Type Dropdown. */}
           <div
             className="relative"
             ref={typeRef}
@@ -283,7 +284,7 @@ function Header() {
               </svg>
             </button>
 
-            {/* Property Type Dropdown Menu */}
+            {/*  : Property Type Dropdown Menu. */}
             {activeDropdown === "type" && (
               <div className="absolute left-0 w-44 bg-white rounded-md shadow-lg z-50 py-1 border border-gray-100 animate-fadeIn">
                 <Link
@@ -308,7 +309,7 @@ function Header() {
             )}
           </div>
 
-          {/* Inquiry Link */}
+          {/*  : Inquiry Link. */}
           <Link
             href="/Inquiry"
             className="px-3 py-2 relative group transition-colors duration-300 cursor-pointer font-normal"
@@ -317,7 +318,7 @@ function Header() {
             <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-red-600 transition-all duration-200 w-0 group-hover:w-full"></span>
           </Link>
 
-          {/* Others Dropdown */}
+          {/*  : Others Dropdown. */}
           <div
             className="relative"
             ref={othersRef}
@@ -344,7 +345,7 @@ function Header() {
               </svg>
             </button>
 
-            {/* Others Dropdown Menu */}
+            {/*  : Others Dropdown Menu. */}
             {activeDropdown === "others" && (
               <div className="absolute right--1 w-48 bg-white rounded-md shadow-lg z-50 py-1 border border-gray-100 animate-fadeIn">
                 <Link
@@ -363,7 +364,7 @@ function Header() {
             )}
           </div>
 
-          {/* Contact Us Link */}
+          {/*  : Contact Us Link. */}
           <Link
             href="/contactus"
             className="px-3 py-2 relative group transition-colors duration-300 cursor-pointer font-normal"
@@ -373,7 +374,7 @@ function Header() {
           </Link>
         </div>
 
-        {/* Mobile Menu - conditionally shown based on isMenuOpen state */}
+        {/*  : Mobile Menu - conditionally shown based on isMenuOpen state. */}
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
@@ -381,7 +382,7 @@ function Header() {
         >
           <div className="flex flex-col items-start space-y-1 px-2">
             
-            {/* Mobile Home Link */}
+            {/*  : Mobile Home Link. */}
             <Link
               href="/"
               onClick={closeMobileMenu}
@@ -392,9 +393,9 @@ function Header() {
               Home
             </Link>
 
-            {/* Mobile About Us Dropdown */}
+            {/*  : Mobile About Us Dropdown. */}
             <div className="w-full">
-              {/* Dropdown Toggle Button */}
+              {/*  : Dropdown Toggle Button. */}
               <button
                 onClick={() => toggleDropdown("aboutUs")}
                 className="w-full flex justify-between items-center px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md text-sm font-normal"
@@ -417,7 +418,7 @@ function Header() {
                 </svg>
               </button>
 
-              {/* Collapsible Dropdown Content - uses CSS transitions for smooth open/close */}
+              {/*  : Collapsible Dropdown Content - uses CSS transitions for smooth open/close. */}
               <div className={`transition-all duration-300 ${activeDropdown === "aboutUs" ? "max-h-96 opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                 <div className="pl-4 py-1 bg-gray-50 rounded-md mt-1 mb-1 space-y-1">
                   <Link
@@ -466,7 +467,7 @@ function Header() {
               </div>
             </div>
 
-            {/* Mobile Property By Location Dropdown */}
+            {/*  : Mobile Property By Location Dropdown. */}
             <div className="w-full">
               <button
                 onClick={() => toggleDropdown("location")}
@@ -524,7 +525,7 @@ function Header() {
               </div>
             </div>
 
-            {/* Mobile Property By Type Dropdown */}
+            {/*  : Mobile Property By Type Dropdown. */}
             <div className="w-full">
               <button
                 onClick={() => toggleDropdown("type")}
@@ -575,7 +576,7 @@ function Header() {
               </div>
             </div>
 
-            {/* Mobile Inquiry Link */}
+            {/*  : Mobile Inquiry Link. */}
             <Link
               href="/Inquiry"
               onClick={closeMobileMenu}
@@ -588,7 +589,7 @@ function Header() {
               Inquiry
             </Link>
 
-            {/* Mobile Others Dropdown */}
+            {/*  : Mobile Others Dropdown. */}
             <div className="w-full">
               <button
                 onClick={() => toggleDropdown("others")}
@@ -632,7 +633,7 @@ function Header() {
               </div>
             </div>
 
-            {/* Mobile Contact Us Link */}
+            {/*  : Mobile Contact Us Link. */}
             <Link
               href="/contactus"
               onClick={closeMobileMenu}

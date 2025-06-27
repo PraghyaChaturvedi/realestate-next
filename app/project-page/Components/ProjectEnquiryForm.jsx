@@ -3,35 +3,36 @@
 import React, { useState } from "react";
 import { MessageSquare, Check, X } from "lucide-react";
 
+//  : This component provides a modal form for users to submit property enquiries, including validation, submission, and success/error handling.
 const PropertyEnquiryForm = ({
-  isOpen,              // Boolean: controls whether the modal is shown
-  onClose,             // Function: to close the modal
-  projectId,           // String or ID: the current project ID
-  projectName,         // String: project name (not used in this form directly)
-  onSubmitSuccess,     // Callback: triggered on successful submission
-  onSubmitError,       // Callback: triggered on error
-  formSubmitted,       // Boolean: whether form was successfully submitted
+  isOpen,              //  : Boolean to control modal visibility.
+  onClose,             //  : Function to close the modal.
+  projectId,           //  : Project ID for which the enquiry is being made.
+  projectName,         //  : Project name (not used directly in the form).
+  onSubmitSuccess,     //  : Callback for successful submission.
+  onSubmitError,       //  : Callback for error during submission.
+  formSubmitted,       //  : Boolean indicating if the form was successfully submitted.
 }) => {
-  // Local form state
+  //  : Local state for form fields.
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
-    project: projectId,  // Include project ID in submission
+    project: projectId,  //  : Include project ID in submission.
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false); // Track form submission state
+  const [isSubmitting, setIsSubmitting] = useState(false); //  : Track form submission state.
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  // Handle changes in form fields
+  //  : Handle changes in form fields and update local state.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Submit form handler
+  //  : Submit form handler with async API call.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -47,7 +48,7 @@ const PropertyEnquiryForm = ({
 
       if (!response.ok) throw new Error("Failed to submit enquiry");
 
-      // Reset form after successful submission
+      //  : Reset form after successful submission.
       setFormData({
         name: "",
         email: "",
@@ -56,15 +57,15 @@ const PropertyEnquiryForm = ({
         project: projectId,
       });
 
-      if (onSubmitSuccess) onSubmitSuccess(); // Invoke success callback
+      if (onSubmitSuccess) onSubmitSuccess(); //  : Invoke success callback.
     } catch (err) {
-      if (onSubmitError) onSubmitError(err.message); // Invoke error callback
+      if (onSubmitError) onSubmitError(err.message); //  : Invoke error callback.
     } finally {
-      setIsSubmitting(false); // Always reset submitting state
+      setIsSubmitting(false); //  : Always reset submitting state.
     }
   };
 
-  // Close form and reset fields
+  //  : Close form and reset fields.
   const handleClose = () => {
     setFormData({
       name: "",
@@ -76,14 +77,15 @@ const PropertyEnquiryForm = ({
     onClose();
   };
 
-  // Do not render modal if not open
+  //  : Do not render modal if not open.
   if (!isOpen) return null;
 
   return (
+    //  : Modal overlay for the enquiry form.
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-2">
-      {/* Modal container */}
+      {/*  : Modal container with close button and content. */}
       <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
-        {/* Close button */}
+        {/*  : Close button for the modal. */}
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10"
@@ -92,7 +94,7 @@ const PropertyEnquiryForm = ({
         </button>
 
         <div className="p-8">
-          {/* Modal header */}
+          {/*  : Modal header with icon and title. */}
           <div className="text-center mb-6">
             <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-1">
               <MessageSquare className="h-6 w-6 text-red-600" />
@@ -102,7 +104,7 @@ const PropertyEnquiryForm = ({
             </h2>
           </div>
 
-          {/* Show success message after form submission */}
+          {/*  : Show success message after form submission. */}
           {formSubmitted ? (
             <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -122,7 +124,7 @@ const PropertyEnquiryForm = ({
               </button>
             </div>
           ) : (
-            // Show enquiry form if not submitted
+            //  : Show enquiry form if not submitted.
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">
@@ -181,7 +183,7 @@ const PropertyEnquiryForm = ({
                 ></textarea>
               </div>
 
-              {/* Submit button */}
+              {/*  : Submit button for the enquiry form. */}
               <button
                 type="submit"
                 disabled={isSubmitting}

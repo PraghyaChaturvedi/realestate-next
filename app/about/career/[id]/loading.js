@@ -3,22 +3,22 @@
 import React from 'react';
 
 /**
- * Loading skeleton for the career details and application form page.
+ *  : This file provides a loading skeleton for the career details and application form page, mimicking the final layout while data loads.
  * This component provides a visual placeholder that mimics the final page layout,
  * improving user experience by showing an active loading state.
  */
 const loading = () => {
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-6">
-      {/* Page Title Skeleton */}
+      {/*  : Page Title Skeleton. */}
       <div className="h-9 bg-gray-300 rounded-md w-1/3 animate-pulse"></div>
 
-      {/* Job Info Card Skeleton */}
+      {/*  : Job Info Card Skeleton. */}
       <div className="bg-white rounded-2xl p-8 space-y-6 animate-pulse">
-        {/* Job Title Skeleton */}
+        {/*  : Job Title Skeleton. */}
         <div className="h-8 bg-red-200 rounded-md w-3/4"></div>
 
-        {/* Job Summary Skeleton */}
+        {/*  : Job Summary Skeleton. */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
           {[...Array(4)].map((_, index) => (
             <div key={index} className="space-y-2">
@@ -28,7 +28,7 @@ const loading = () => {
           ))}
         </div>
 
-        {/* Job Description and Skills Skeleton */}
+        {/*  : Job Description and Skills Skeleton. */}
         <div className="pt-6 space-y-8">
           <div>
             <div className="h-6 bg-gray-300 rounded w-1/3 mb-3"></div>
@@ -49,19 +49,19 @@ const loading = () => {
         </div>
       </div>
 
-      {/* Job Application Form Skeleton (ApplyForJob) */}
+      {/*  : Job Application Form Skeleton (ApplyForJob). */}
       <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow mt-10 animate-pulse">
         <div className="h-8 bg-red-200 rounded-md w-1/3 mb-6"></div>
         <div className="space-y-5">
-          {/* Input field skeletons */}
+          {/*  : Input field skeletons. */}
           <div className="h-11 w-full bg-gray-200 border rounded-md"></div>
           <div className="h-11 w-full bg-gray-200 border rounded-md"></div>
           <div className="h-11 w-full bg-gray-200 border rounded-md"></div>
-          {/* Textarea skeleton */}
+          {/*  : Textarea skeleton. */}
           <div className="h-28 w-full bg-gray-200 border rounded-md"></div>
-          {/* File input skeleton */}
+          {/*  : File input skeleton. */}
           <div className="h-11 w-full bg-gray-200 border rounded-md"></div>
-          {/* Submit button skeleton */}
+          {/*  : Submit button skeleton. */}
           <div className="h-11 w-28 bg-red-200 rounded-md"></div>
         </div>
       </div>

@@ -3,21 +3,23 @@
 import { useState } from "react";
 import { Check } from "lucide-react";
 
+//  : This component displays the project description and unique selling points (USPs), with toggles for expanding/collapsing content.
 const AboutProject = ({ project }) => {
-  // Toggle states for showing full text
+  //  : Toggle states for showing full text.
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showFullUsps, setShowFullUsps] = useState(false);
 
   return (
+    //  : Main container for the about section with styling.
     <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-      {/* Section Heading */}
+      {/*  : Section Heading for about this project. */}
       <h2 className="text-2xl font-semibold mb-6 text-gray-900">
         About This Project
       </h2>
 
-      {/* ---------------- Description ---------------- */}
+      {/*  : Project description, showing full or partial text. */}
       <pre className="text-gray-700 text-base leading-relaxed whitespace-pre-wrap font-main mb-2">
-        {/* Show full description or just first 5 lines */}
+        {/*  : Show full description or just first 5 lines. */}
         {showFullDescription
           ? project.description
           : project.description.split("\n").slice(0, 5).join("\n") + "…"}

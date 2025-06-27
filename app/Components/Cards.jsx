@@ -17,10 +17,11 @@ import {
 import { FaRupeeSign } from "react-icons/fa";
 import { useState } from "react";
 
+//  : This component renders a card for a real estate project, showing image, price, details, and actions.
 const Cards = ({ project }) => {
   const [unit, setUnit] = useState("");
 
-  // Extract necessary fields from the project object
+  //  : Extract necessary fields from the project object.
   const {
     projectName,
     minPrice,
@@ -36,10 +37,10 @@ const Cards = ({ project }) => {
     _id,
   } = project;
 
-  // Get unique unit types from project specifications
+  //  : Get unique unit types from project specifications.
   const unitTypes = [...new Set(project.projectSpecification.map((spec) => spec.unitType))].join(", ");
 
-  // Format price into readable Indian currency units
+  //  : Format price into readable Indian currency units.
   const formatToIndianUnits = (num) => {
     if (!num || num <= 0) return "On Request";
     if (num >= 1e7) {
@@ -51,7 +52,7 @@ const Cards = ({ project }) => {
     }
   };
 
-  // Share button handler using Web Share API
+  //  : Share button handler using Web Share API.
   const handleShare = async (e, slug) => {
     e.preventDefault();
     await navigator.share({
@@ -64,8 +65,9 @@ const Cards = ({ project }) => {
   const price = formatToIndianUnits(minPrice);
 
   return (
+    //  : Main card container for the project.
     <div key={_id} className="relative w-full">
-      {/* RERA status ribbon */}
+      {/*  : RERA status ribbon if available. */}
       { project.reraNumber &&
         <div className="absolute top-[14.25rem] -left-2 z-10">
           <div className="bg-red-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-sm flex items-center shadow-lg relative">
@@ -82,11 +84,11 @@ const Cards = ({ project }) => {
         </div>
       }
 
-      {/* Project card layout */}
+      {/*  : Project card layout. */}
       <div className="relative w-full overflow-hidden rounded-xl">
         <div className="bg-white overflow-hidden flex flex-col h-full">
           
-          {/* Image section with overlay */}
+          {/*  : Image section with overlay. */}
           <div className="relative h-60 w-full overflow-hidden group">
             <Link href={`/project-page/${slug}`} className="w-full h-full block">
               <img
@@ -94,7 +96,7 @@ const Cards = ({ project }) => {
                 alt={projectName}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              {/* Hover overlay for viewing details */}
+              {/*  : Hover overlay for viewing details. */}
               <div className="absolute inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-70 transition-opacity duration-300">
                 <p className="text-white text-center text-sm md:text-base font-medium px-4">
                   Click to view more details about this project
@@ -103,17 +105,17 @@ const Cards = ({ project }) => {
             </Link>
           </div>
 
-          {/* Project information section */}
+          {/*  : Project information section. */}
           <div className="p-5 pb-3 flex-1">
             <div className="flex justify-between items-start">
-              {/* Project title */}
+              {/*  : Project title. */}
               <div className="min-h-[3.5rem] w-full mr-4">
                 <h3 className="text-gray-900 text-xl font-bold line-clamp-2 h-full">
                   {projectName}
                 </h3>
               </div>
 
-              {/* Price display */}
+              {/*  : Price display. */}
               <div className="text-right flex-shrink-0">
                 <div className="text-red-600 text-2xl font-bold flex items-center justify-end">
                   <span>
@@ -130,7 +132,7 @@ const Cards = ({ project }) => {
               </div>
             </div>
 
-            {/* Builder and location */}
+            {/*  : Builder and location. */}
             <div className="grid grid-cols-2 mb-5">
               <div className="mt-3 flex items-center text-gray-600">
                 <FiGlobe className="h-4 w-4 text-red-600 mr-1" />
@@ -142,9 +144,9 @@ const Cards = ({ project }) => {
               </div>
             </div>
 
-            {/* Details grid: size, units, type */}
+            {/*  : Details grid: size, units, type. */}
             <div className="grid grid-cols-1 gap-5 mt-4">
-              {/* Size */}
+              {/*  : Size. */}
               <div className="flex items-center">
                 <FiLayers className="h-4 w-4 text-red-600 mr-2" />
                 <div>
@@ -155,7 +157,7 @@ const Cards = ({ project }) => {
                 </div>
               </div>
 
-              {/* Units */}
+              {/*  : Units. */}
               <div className="flex items-center">
                 <FiGrid className="h-4 w-4 text-red-600 mr-2" />
                 <div>
@@ -164,7 +166,7 @@ const Cards = ({ project }) => {
                 </div>
               </div>
 
-              {/* Property Type */}
+              {/*  : Property Type. */}
               <div className="flex items-start space-x-2">
                 <div className="shrink-0 mt-1">
                   <FiHome className="h-4 w-4 text-red-600" />
@@ -177,7 +179,7 @@ const Cards = ({ project }) => {
                 </div>
               </div>
 
-              {/* Optional: Uncomment to show RERA again */}
+              {/*  : Optional: Uncomment to show RERA again. */}
               {/* <div className="flex items-center">
                 <FiCheckCircle className="h-4 w-4 text-red-600 mr-2" />
                 <div>
@@ -188,7 +190,7 @@ const Cards = ({ project }) => {
             </div>
           </div>
 
-          {/* Action buttons: View Details + Share */}
+          {/*  : Action buttons: View Details + Share. */}
           <div className="px-5 pb-5 pt-3">
             <div className="flex justify-between">
               <Link

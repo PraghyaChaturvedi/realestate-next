@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import InquiryForm from "../Components/InquiryForm.jsx";
 
 const Inquiry = () => {
-  // Form state
+  //  : Form state for inquiry fields.
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,12 +14,12 @@ const Inquiry = () => {
     message: "",
   });
 
-  // Submission state
+  //  : Submission state for form feedback.
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  // Handle input changes
+  //  : Handle input changes for form fields.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -28,7 +28,7 @@ const Inquiry = () => {
     }));
   };
 
-  // Handle form submission
+  //  : Handle form submission and send data to backend.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -44,7 +44,7 @@ const Inquiry = () => {
           },
           body: JSON.stringify({
             ...formData,
-            timestamp: new Date().toISOString(), // Optional: add timestamp to form submission
+            timestamp: new Date().toISOString(), //  : Add timestamp to form submission.
           }),
         }
       );
@@ -53,7 +53,7 @@ const Inquiry = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // On success, clear form and show success message
+      //  : On success, clear form and show success message.
       setSubmitSuccess(true);
       setFormData({
         name: "",
@@ -70,10 +70,11 @@ const Inquiry = () => {
   };
 
   return (
+    //  : Main container for the Inquiry page with background and padding.
     <div className="min-h-screen bg-gray-100 pt-16 p-4">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-          {/* Left section - Inquiry form */}
+          {/*  : Left section - Inquiry form. */}
           <div className="w-full lg:w-1/2 max-w-lg mx-auto lg:max-w-none">
             <p className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
               Inquiry
@@ -82,7 +83,7 @@ const Inquiry = () => {
               Our expert will contact you shortly.
             </p>
 
-            {/* Inquiry form component */}
+            {/*  : Inquiry form component. */}
             <InquiryForm
               formData={formData}
               handleChange={handleChange}
@@ -92,7 +93,7 @@ const Inquiry = () => {
             />
           </div>
 
-          {/* Right section - Decorative animated image */}
+          {/*  : Right section - Decorative animated image. */}
           <div className="w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0">
             <motion.div
               initial={{ x: "7rem", opacity: 0, rotate: -5 }}
@@ -104,7 +105,7 @@ const Inquiry = () => {
               }}
               className="relative w-[250px] h-[250px] xs:w-[300px] xs:h-[300px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px]"
             >
-              {/* Image container with border and shadow */}
+              {/*  : Image container with border and shadow. */}
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 className="absolute inset-0 rounded-full overflow-hidden border-4 sm:border-6 md:border-8 border-white shadow-xl sm:shadow-2xl z-10"
@@ -117,14 +118,14 @@ const Inquiry = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
               </motion.div>
 
-              {/* Floating red orb top-left */}
+              {/*  : Floating red orb top-left. */}
               <motion.div
                 animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 md:-top-10 md:-left-10 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-red-500 to-rose-600 opacity-20 z-0"
               />
 
-              {/* Floating red orb bottom-right */}
+              {/*  : Floating red orb bottom-right. */}
               <motion.div
                 animate={{ y: [0, 15, 0], rotate: [0, -3, 0] }}
                 transition={{
@@ -136,7 +137,7 @@ const Inquiry = () => {
                 className="absolute -bottom-6 -right-6 sm:-bottom-8 sm:-right-8 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-gradient-to-bl from-red-400 to-rose-500 opacity-20 z-0"
               />
 
-              {/* Subtle inner grid overlay effect */}
+              {/*  : Subtle inner grid overlay effect. */}
               <div className="absolute inset-0 rounded-full overflow-hidden z-0">
                 <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(ellipse_at_center,transparent_60%,white)]" />
               </div>

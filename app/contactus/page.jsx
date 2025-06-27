@@ -1,6 +1,7 @@
 import ContactUsClient from "./ContactUsClient";
 
 export async function generateMetadata() {
+  //  : Returns SEO metadata for the Contact Us page, including Open Graph and Twitter settings.
   return {
     title: "Contact Us | Shelter4U",
     description:
@@ -46,5 +47,6 @@ export async function generateMetadata() {
 }
 
 export default function ContactPage() {
+  //  : Renders the main client-side Contact Us form component.
   return <ContactUsClient />;
 }

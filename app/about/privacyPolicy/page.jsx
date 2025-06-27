@@ -2,8 +2,11 @@ export const dynamic = "force-dynamic";
 
 import PrivacyPolicyClient from './PrivacyPolicyClient';
 
+//  : This file fetches and displays the privacy policy using the PrivacyPolicyClient component.
+
 //SEO Tags
 export async function generateMetadata() {
+  //  : Returns static SEO metadata for the privacy policy page.
   return {
     title: "Privacy Policy | Shelter4U",
     description:
@@ -49,12 +52,15 @@ export async function generateMetadata() {
 }
 
 export default async function PrivacyPolicyPage() {
+  //  : Fetch privacy policy data from the API endpoint.
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/privacyPolicy`);
 
   if (!res.ok) {
+    //  : Throw an error if the fetch fails.
     throw new Error('Failed to fetch privacy policy');
   }
 
+  //  : Parse the response as JSON and pass the data to the client component.
   const data = await res.json();
   return <PrivacyPolicyClient data={data.privacyPolicy} />;
 }

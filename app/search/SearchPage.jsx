@@ -14,6 +14,7 @@ import {
   FiClock,
 } from "react-icons/fi";
 
+//  : This client component renders the main search page UI, including filters, search, and results grid.
 const SearchPageClient = ({ initialProjects = [] }) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const router = useRouter();
@@ -70,30 +71,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     { value: "150000000", label: "15 Crore" },
   ];
 
-  // *** LOGIC FOR DYNAMICALLY DISABLING OPTIONS ***
-  const minPriceOptions = useMemo(() => {
-    if (!filters.maxBudget) return basePriceOptions;
-    const maxVal = parseInt(filters.maxBudget, 10);
-    return basePriceOptions.map(opt => ({
-      ...opt,
-      disabled: parseInt(opt.value, 10) >= maxVal,
-    }));
-  }, [filters.maxBudget]);
-
-  const maxPriceOptions = useMemo(() => {
-    if (!filters.minBudget) return basePriceOptions;
-    const minVal = parseInt(filters.minBudget, 10);
-    return basePriceOptions.map(opt => ({
-      ...opt,
-      disabled: parseInt(opt.value, 10) <= minVal,
-    }));
-  }, [filters.minBudget]);
-  // *** END OF LOGIC ***
-
-  useEffect(() => {
-    setProjects(initialProjects);
-  }, [initialProjects]);
-  
+  //  : Build a query string from updated filter values.
   const buildQueryString = (newValues) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(newValues).forEach(([key, value]) => {
@@ -106,17 +84,18 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     return params.toString();
   };
 
+  //  : Handle changes to filter values and update the URL.
   const handleFilterChange = (filterName, value) => {
-    // *** UX IMPROVEMENT: Auto-clear conflicting selections ***
+    //  : UX improvement to auto-clear conflicting min/max budget selections.
     const newFilters = { ...filters, [filterName]: value };
     if (filterName === 'minBudget' && value && newFilters.maxBudget && parseInt(value, 10) >= parseInt(newFilters.maxBudget, 10)) {
-        newFilters.maxBudget = ''; // Clear max if min is >= max
+        newFilters.maxBudget = ''; //  : Clear max if min is >= max.
     }
     if (filterName === 'maxBudget' && value && newFilters.minBudget && parseInt(value, 10) <= parseInt(newFilters.minBudget, 10)) {
-        newFilters.minBudget = ''; // Clear min if max is <= min
+        newFilters.minBudget = ''; //  : Clear min if max is <= min.
     }
     setFilters(newFilters);
-    // *** END OF UX IMPROVEMENT ***
+    //  : End of UX improvement.
 
     if (filterName !== "minBudget" && filterName !== "maxBudget") {
       const newQuery = buildQueryString({ [filterName]: value, q: "" });
@@ -124,6 +103,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     }
   };
 
+  //  : Handle search form submission and update the URL with all filters.
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const newQuery = buildQueryString({ 
@@ -134,13 +114,13 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     setShowSuggestions(false);
   };
   
-  // ... (rest of the component is the same)
-  
+  //  : Handle suggestion click and execute callback (e.g., navigation).
   const handleSuggestionClick = (callback) => {
     setShowSuggestions(false);
     callback();
   };
 
+  //  : Hide suggestions when clicking outside the search input.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -151,6 +131,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  //  : Handle changes in the autocomplete input and fetch suggestions.
   const handleAutocompleteChange = async (e) => {
     const value = e.target.value;
     setSearchQuery(value);
@@ -172,7 +153,32 @@ const SearchPageClient = ({ initialProjects = [] }) => {
     }
   };
 
+  useEffect(() => {
+    setProjects(initialProjects);
+  }, [initialProjects]);
+  
+  // *** LOGIC FOR DYNAMICALLY DISABLING OPTIONS ***
+  const minPriceOptions = useMemo(() => {
+    if (!filters.maxBudget) return basePriceOptions;
+    const maxVal = parseInt(filters.maxBudget, 10);
+    return basePriceOptions.map(opt => ({
+      ...opt,
+      disabled: parseInt(opt.value, 10) >= maxVal,
+    }));
+  }, [filters.maxBudget]);
+
+  const maxPriceOptions = useMemo(() => {
+    if (!filters.minBudget) return basePriceOptions;
+    const minVal = parseInt(filters.minBudget, 10);
+    return basePriceOptions.map(opt => ({
+      ...opt,
+      disabled: parseInt(opt.value, 10) <= minVal,
+    }));
+  }, [filters.minBudget]);
+  // *** END OF LOGIC ***
+
   return (
+    //  : Main container for the search page with background and padding.
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
@@ -184,9 +190,10 @@ const SearchPageClient = ({ initialProjects = [] }) => {
           </p>
         </div>
 
+        {/*  : Search and filter form section. */}
         <form onSubmit={handleSearchSubmit} className="mb-6 md:mb-10 w-full">
           <div className="flex flex-col p-4 bg-white rounded-2xl shadow-lg border border-gray-100 mb-4" ref={searchRef}>
-            {/* Search Input */}
+            {/*  : Search input with autocomplete suggestions. */}
              <div className="flex items-center w-full">
               <div className="p-2 bg-red-50 rounded-lg mr-3">
                 <FiMapPin className="text-red-600 text-xl" />
@@ -212,8 +219,9 @@ const SearchPageClient = ({ initialProjects = [] }) => {
             </div>
           </div>
 
+          {/*  : Filter row with project type, status, unit type, and price range. */}
           <div className="flex flex-col xl:flex-row p-4 bg-white rounded-2xl shadow-lg border border-gray-100">
-             {/* Other Filters */}
+             {/*  : Project Type filter. */}
             <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mr-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiHome className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full relative">
@@ -226,6 +234,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
+            {/*  : Project Status filter. */}
             <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mx-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiClock className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full relative">
@@ -238,6 +247,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
+            {/*  : Unit Type filter. */}
             <div className="flex items-center flex-1 mb-2 xl:mb-0 xl:mx-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiGrid className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full relative">
@@ -250,7 +260,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
               </div>
             </div>
 
-            {/* UPDATED PRICE RANGE SECTION USING CUSTOM COMPONENT */}
+            {/*  : Price Range filter using custom dropdowns. */}
             <div className="flex items-center flex-2 mb-2 xl:mb-0 xl:ml-4">
               <div className="p-2 bg-red-50 rounded-lg mr-3"><FiTag className="text-red-600 text-xl" /></div>
               <div className="flex flex-col w-full">
@@ -272,7 +282,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
                 </div>
               </div>
             </div>
-            {/* END OF UPDATED SECTION */}
+            {/*  : End of filter row. */}
 
             <button type="submit" className="bg-red-600 text-white px-6 py-3 rounded-xl cursor-pointer w-full xl:w-auto mt-4 xl:mt-0 xl:ml-6 hover:bg-red-700 transition-colors shadow-md hover:shadow-lg flex items-center justify-center font-medium">
               <FiSearch className="mr-2" />
@@ -281,6 +291,7 @@ const SearchPageClient = ({ initialProjects = [] }) => {
           </div>
         </form>
 
+        {/*  : Results grid for displaying project cards or no results message. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects && projects.length > 0 ? (
             projects.map((project) => (

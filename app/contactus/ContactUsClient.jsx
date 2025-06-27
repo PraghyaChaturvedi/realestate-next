@@ -8,7 +8,7 @@ import { RiPhoneLine, RiMailLine, RiMapPinLine } from "react-icons/ri";
 import InquiryForm from "../Components/InquiryForm.jsx";
 
 export default function ContactUsPage() {
-  // State to hold contact details fetched from the backend
+  //  : State to hold contact details fetched from the backend.
   const [contactUs, setContactUs] = useState({
     address: "",
     mail: [],
@@ -19,7 +19,7 @@ export default function ContactUsPage() {
     embedLink: "",
   });
 
-  // State to manage inquiry form data
+  //  : State to manage inquiry form data.
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,12 +27,12 @@ export default function ContactUsPage() {
     message: "",
   });
 
-  // State flags for form submission
+  //  : State flags for form submission.
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  // Fetch footer/contact data on component mount
+  //  : Fetch footer/contact data on component mount.
   useEffect(() => {
     const fetchFooter = async () => {
       try {
@@ -48,13 +48,13 @@ export default function ContactUsPage() {
     fetchFooter();
   }, []);
 
-  // Handle changes in input fields
+  //  : Handle changes in input fields.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  //  : Handle form submission.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -88,18 +88,19 @@ export default function ContactUsPage() {
   };
 
   return (
+    //  : Main container for the Contact Us page with background and padding.
     <div className="w-full min-h-screen bg-gray-100 py-12 px-6 md:px-24 lg:px-32">
       <div className="flex flex-col md:flex-row justify-between w-full">
-        {/* Left Section - Contact Info and Social Media */}
+        {/*  : Left Section - Contact Info and Social Media. */}
         <div className="w-full md:w-1/2 md:pr-8">
           <p className="text-4xl font-bold text-gray-800 mb-4">Contact Us</p>
           <p className="text-gray-500 mb-8">
             Feel free to contact us. We're ready to help you find your dream home.
           </p>
 
-          {/* Contact Info Grid */}
+          {/*  : Contact Info Grid. */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            {/* Phone Numbers */}
+            {/*  : Phone Numbers. */}
             <div className="flex items-start gap-4">
               <div className="bg-red-100 text-red-600 text-xl p-3 rounded-md">
                 <RiPhoneLine />
@@ -112,7 +113,7 @@ export default function ContactUsPage() {
               </div>
             </div>
 
-            {/* Email Addresses */}
+            {/*  : Email Addresses. */}
             <div className="flex flex-wrap md:flex-nowrap items-start gap-4 w-full max-w-2xl">
               <div className="bg-red-100 text-red-600 text-xl p-3 rounded-md flex-shrink-0">
                 <RiMailLine />
@@ -125,7 +126,7 @@ export default function ContactUsPage() {
               </div>
             </div>
 
-            {/* Office Address */}
+            {/*  : Office Address. */}
             <div className="flex items-start gap-4 sm:col-span-2">
               <div className="bg-red-100 text-red-600 text-xl p-3 rounded-md">
                 <RiMapPinLine />
@@ -139,7 +140,7 @@ export default function ContactUsPage() {
 
           <hr className="mb-7 text-gray-300" />
 
-          {/* Social Media Icons */}
+          {/*  : Social Media Icons. */}
           <div className="flex items-center text-2xl gap-4 flex-wrap">
             <p className="font-semibold">Social Media</p>
             {contactUs.facebookLink && (
@@ -163,7 +164,7 @@ export default function ContactUsPage() {
           </div>
         </div>
 
-        {/* Right Section - Inquiry Form */}
+        {/*  : Right Section - Inquiry Form. */}
         <div className="w-full md:w-1/2 md:pl-8 mt-8 md:mt-0">
           <div className="rounded-lg p-6 shadow-lg bg-white border border-red-200">
             <InquiryForm
@@ -178,7 +179,7 @@ export default function ContactUsPage() {
         </div>
       </div>
 
-      {/* Google Map Embed (optional) */}
+      {/*  : Google Map Embed (optional). */}
       {contactUs.embedLink && (
         <div className="w-full mt-8">
           <iframe

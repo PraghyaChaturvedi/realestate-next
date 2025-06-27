@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
+//  : This component renders an inquiry form for users to contact, including validation, submission, and success feedback.
 const InquiryForm = () => {
-  // State to hold form input values
+  //  : State to hold form input values.
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,17 +13,17 @@ const InquiryForm = () => {
     message: "",
   });
 
-  // State to manage form submission and success message
+  //  : State to manage form submission and success message.
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Update form state on input change
+  //  : Update form state on input change.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  //  : Handle form submission with async API call.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -33,11 +34,11 @@ const InquiryForm = () => {
         body: JSON.stringify(formData),
       });
 
-      // On success: reset form and show success message
+      //  : On success, reset form and show success message.
       if (res.ok) {
         setSubmitSuccess(true);
         setFormData({ name: "", email: "", mobile: "", message: "" });
-        setTimeout(() => setSubmitSuccess(false), 3000); // Hide success message after 3s
+        setTimeout(() => setSubmitSuccess(false), 3000); //  : Hide success message after 3s.
       } else {
         throw new Error("Submission failed");
       }
@@ -49,13 +50,14 @@ const InquiryForm = () => {
   };
 
   return (
+    //  : Animated container for the inquiry form.
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6 }}
       className="w-full"
     >
-      {/* Show success message after form is submitted */}
+      {/*  : Show success message after form is submitted. */}
       {submitSuccess ? (
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 sm:p-6 text-center">
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
@@ -67,10 +69,10 @@ const InquiryForm = () => {
           <p className="text-gray-600">Our expert will contact you shortly</p>
         </div>
       ) : (
-        // Inquiry form
+        //  : Inquiry form for user input.
         <form onSubmit={handleSubmit} className="w-full">
           <div className="space-y-4">
-            {/* Name Input */}
+            {/*  : Name Input. */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <input
@@ -84,7 +86,7 @@ const InquiryForm = () => {
               />
             </div>
 
-            {/* Email Input */}
+            {/*  : Email Input. */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <input
@@ -98,7 +100,7 @@ const InquiryForm = () => {
               />
             </div>
 
-            {/* Phone Input */}
+            {/*  : Phone Input. */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
               <input
@@ -112,7 +114,7 @@ const InquiryForm = () => {
               />
             </div>
 
-            {/* Message Input */}
+            {/*  : Message Input. */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
               <textarea
@@ -126,13 +128,13 @@ const InquiryForm = () => {
               ></textarea>
             </div>
 
-            {/* Submit Button */}
+            {/*  : Submit Button. */}
             <button
               type="submit"
               disabled={isSubmitting}
               className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 sm:py-3 rounded-lg transition duration-300 flex justify-center items-center"
             >
-              {/* Show loading spinner if submitting */}
+              {/*  : Show loading spinner if submitting. */}
               {isSubmitting ? (
                 <>
                   <svg

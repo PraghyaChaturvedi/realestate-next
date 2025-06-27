@@ -2,8 +2,11 @@ export const dynamic = "force-dynamic";
 
 import EventClient from './EventClient.jsx';
 
+//  : This file fetches and displays events using the EventClient component.
+
 //SEO Tags
 export async function generateMetadata() {
+  //  : Returns static SEO metadata for the events page.
   return {
     title: "Events | Shelter4U",
     description:
@@ -19,7 +22,7 @@ export async function generateMetadata() {
     openGraph: {
       title: "Events | Shelter4U",
       description:
-        "Check out Shelter4U’s recent and upcoming events. Discover how we engage with clients and the real estate community.",
+        "Check out Shelter4U's recent and upcoming events. Discover how we engage with clients and the real estate community.",
       url: "https://shelter4u.in/about/event",
       type: "website",
       images: [
@@ -50,12 +53,15 @@ export async function generateMetadata() {
 
 
 export default async function EventPage() {
+  //  : Fetch events from the API endpoint.
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/event`);
 
   if (!res.ok) {
+    //  : Throw an error if the fetch fails.
     throw new Error('Failed to fetch events');
   }
 
+  //  : Parse the response as JSON and pass the data to the client component.
   const data = await res.json();
   
 
