@@ -5,13 +5,13 @@ const { Project,Leads } = models;
 
 export async function GET(req, { params }) {
   try {
-    const { id } = await params;
+    const { slug } = await params;
     // Validate the id
-    if (!id) {
+    if (!slug) {
       return NextResponse.json({ message: "Project ID is required" }, { status: 400 });
     }
 
-    const project = await Project.findById(id).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]).populate("state", ["_id", "name"]).populate("city", ["_id", "name"]);
+    const project = await Project.findOne({slug: slug}).populate("area", ["_id", "name"]).populate("builder", ["_id", "name"]).populate("state", ["_id", "name"]).populate("city", ["_id", "name"]);
     console.log(project);
     if (!project) {
       return NextResponse.json({ message: "Project not found" }, { status: 404 });
